@@ -1,0 +1,15 @@
+Aihe: Shakki
+Klassinen Shakki -peli, jossa kaksi ihmistä pelaa vastakkain. Ohjelma
+kertoo mahdolliset ja mahdottomat siirrot. Pelissä on graafinen käyttö-
+liittymä. 
+
+Käyttäjät: Harrastajat
+
+Toiminnot:
+-Pelin aloitus
+-pelaajat voivat valita siirrettävän nappulan hiirellä
+-Ohjelma ilmaisee mahdollisen siirtojen vaihtoehdot
+-pelaaajat voivat siirtää nappuloita
+-Pelaajat voivat syödä vastustajan nappuloita omilla nappuloillaan
+-Ohjelma kirjaa tehdyt siirrot
+-Ohjelma kertoo pelin voittajan
