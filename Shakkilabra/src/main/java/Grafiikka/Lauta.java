@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GameEngine;
+package Grafiikka;
 
 import Assets.EnumVari;
-import Assets.Ruutu;
 
 public final class Lauta {
 
@@ -16,7 +15,6 @@ public final class Lauta {
         this.ruutu = new Ruutu[8][8];
         luoRuudukko();
         asciiRuutuTulostin();
-        //asciiLautaTulostin();
     }
 
     public void luoRuudukko() {
@@ -38,9 +36,16 @@ public final class Lauta {
         }
         System.out.println("Ruudukko luotu.");
     }
+
+    public Ruutu[][] getRuudukko() {
+        return ruutu;
+    }
+
+    public Ruutu getRuutu(int x, int y) {
+        return ruutu[x][y];
+    }
+
     //DEBUG   
-
-
     public void asciiRuutuTulostin() {
 
         for (int i = 0; i < 8; i++) {

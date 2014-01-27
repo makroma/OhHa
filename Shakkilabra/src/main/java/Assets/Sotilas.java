@@ -5,6 +5,10 @@
  */
 package Assets;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 /**
  *
  * @author marko
@@ -12,27 +16,70 @@ package Assets;
 public class Sotilas extends Nappula {
 
     public Sotilas(EnumVari vari, int x, int y) {
-        super(EnumTyyppi.S, vari, x, y);
+        super(EnumTyyppi.S, vari, new Kordinaatti(x, y));
     }
 
     @Override
-    public void liiku() {
-        if (super.getVari().equals(EnumVari.M)) {
-            super.setX(super.getX() + 1);
+    public void liiku(int x, int y) {
+        kasvataSiirtojenMaaraaYhdella();
+        super.setKordinaatti(x, y);
+
+//        if (super.getVari().equals(EnumVari.M)) {
+//            super.setKordinaatti(super.getKordinaatti().getX() + 1, super.getKordinaatti().getY());
+//        } else {
+//            super.setKordinaatti(super.getKordinaatti().getX() - 1, super.getKordinaatti().getY());
+//        }
+    }
+
+    @Override
+    public String uCodeNappula() {
+        String s;
+        if (super.getVari() == EnumVari.V) {
+            s = "\u2659";
         } else {
-            super.setX(super.getX() - 1);
+            s = "\u265F";
         }
+        return s;
     }
 
     @Override
-    public int[][] mahdollisetSiirrot() {
+    public HashMap<Kordinaatti, Boolean> mahdollisetSiirrot() {
+        HashMap<Kordinaatti, Boolean> siirrot = new HashMap<>();
+       // List<Kordinaatti> siirrot = new ArrayList<>();
 
-        //onko tämä hyvä idea näin...
-        
-        int[][] siirrot = new int [8][8];
+        //Jos siirtojenmäärä = 0 niin sotilasta voi siirtää yhden tai kaksi eteenpäin
+        if (super.getSiirtojenMaara() == 0) {
+            if (super.getVari() == EnumVari.M) {
+                siirrot.put(new Kordinaatti(super.getKordinaatti().getX() + 1, super.getKordinaatti().getY()), Boolean.FALSE);
+                siirrot.put(new Kordinaatti(super.getKordinaatti().getX() + 2, super.getKordinaatti().getY()), Boolean.FALSE);
+                //siirrot.add(new Kordinaatti(super.getKordinaatti().getX() + 1, super.getKordinaatti().getY()));
+                //siirrot.add(new Kordinaatti(super.getKordinaatti().getX() + 2, super.getKordinaatti().getY()));
+            } else {
+                siirrot.put(new Kordinaatti(super.getKordinaatti().getX() - 1, super.getKordinaatti().getY()), Boolean.FALSE);
+                siirrot.put(new Kordinaatti(super.getKordinaatti().getX() - 2, super.getKordinaatti().getY()), Boolean.FALSE);
+                //siirrot.add(new Kordinaatti(super.getKordinaatti().getX() - 1, super.getKordinaatti().getY()));
+                //siirrot.add(new Kordinaatti(super.getKordinaatti().getX() - 2, super.getKordinaatti().getY()));
+            }
+        }
+        // Voi liikkua eteenpäin, (jos edessä ei ole toista nappulaa, mutta sitä ei tässä testata)
+        if (super.getSiirtojenMaara() > 0) {
+            if (super.getVari() == EnumVari.M) {
+                siirrot.put(new Kordinaatti(super.getKordinaatti().getX() + 1, super.getKordinaatti().getY()), Boolean.FALSE);
+                //siirrot.add(new Kordinaatti(super.getKordinaatti().getX() + 1, super.getKordinaatti().getY()));
+            } else {
+                siirrot.put(new Kordinaatti(super.getKordinaatti().getX() - 1, super.getKordinaatti().getY()), Boolean.FALSE);
+                //siirrot.add(new Kordinaatti(super.getKordinaatti().getX() - 1, super.getKordinaatti().getY()));
+            }
+        }
+        //voi syödä viistoihin, eli palauttaa true
+        if (super.getVari() == EnumVari.M) {
+            siirrot.put(new Kordinaatti(super.getKordinaatti().getX() + 1, super.getKordinaatti().getY() + 1), Boolean.TRUE);
+            siirrot.put(new Kordinaatti(super.getKordinaatti().getX() + 1, super.getKordinaatti().getY() - 1), Boolean.TRUE);
+        } else {
+            siirrot.put(new Kordinaatti(super.getKordinaatti().getX() - 1, super.getKordinaatti().getY() + 1), Boolean.TRUE);
+            siirrot.put(new Kordinaatti(super.getKordinaatti().getX() - 1, super.getKordinaatti().getY() - 1), Boolean.TRUE);
+        }
 
-        
         return siirrot;
     }
-
 }

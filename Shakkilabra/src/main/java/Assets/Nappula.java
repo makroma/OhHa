@@ -1,40 +1,58 @@
 package Assets;
 
+import java.util.HashMap;
+import java.util.List;
 
 public abstract class Nappula {
 
     private EnumTyyppi tyyppi;
     private EnumVari vari;
-    private int x;
-    private int y;
+    private Kordinaatti kordinaatti;
     private int siirtojenMaara;
     private boolean elossa;
 
-    public Nappula(EnumTyyppi nappulat, EnumVari vari, int x, int y) {
+    public Nappula(EnumTyyppi nappulat, EnumVari vari, Kordinaatti kord) {
         this.tyyppi = nappulat;
         this.vari = vari;
-        this.x = x;
-        this.y = y;
+        this.kordinaatti = kord;
         this.siirtojenMaara = 0;
-        this.elossa = false;
+        this.elossa = true;
+    }
+    /*
+     *  Abstraktit luokat
+     */
+
+    public abstract void liiku(int x, int y);
+
+    public abstract String uCodeNappula();
+
+    public abstract HashMap<Kordinaatti, Boolean> mahdollisetSiirrot();
+
+    /*getMahdollisetSiirrot palauttaa boolean true, jos voi 
+     *syödä kyseisessä kordinaatissa
+     *esim sotilas ei syö eteenpäin liikkuessa
+     */
+    public HashMap<Kordinaatti, Boolean> getMahdollisetSiirrot() {
+        return mahdollisetSiirrot();
     }
 
-    public int getX() {
-        return x;
+    public void kasvataSiirtojenMaaraaYhdella() {
+        this.siirtojenMaara++;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public boolean onkoMahdollinenSiirto(int x, int y) {
+
+        for (Kordinaatti k : mahdollisetSiirrot().keySet()) {
+            if (k.getX() == x && k.getY() == y) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
+    /*
+     *   Getterit ja Setterit ja toString
+     */
     public void setTyyppi(EnumTyyppi tyyppi) {
         this.tyyppi = tyyppi;
     }
@@ -51,12 +69,27 @@ public abstract class Nappula {
         return this.vari;
     }
 
-    public String getABC(int x) {
-        
-        String ABC = "ABCDEFGH";        
-        return ABC.charAt(x-1)+"";
+    public int getSiirtojenMaara() {
+        return this.siirtojenMaara;
     }
 
-    public abstract void liiku();
-    public abstract int[][] mahdollisetSiirrot();
+    public Kordinaatti getKordinaatti() {
+        return kordinaatti;
+    }
+
+    public void setKordinaatti(int x, int y) {
+        this.kordinaatti = new Kordinaatti(x, y);
+    }
+
+    public boolean isElossa() {
+        return this.elossa;
+    }
+
+    public void setElossa() {
+        this.elossa = false;
+    }
+
+    public String toString() {
+        return this.vari + "" + this.tyyppi + " " + this.kordinaatti.getX() + "," + this.kordinaatti.getY() + " Siirtoja:" + this.siirtojenMaara;
+    }
 }

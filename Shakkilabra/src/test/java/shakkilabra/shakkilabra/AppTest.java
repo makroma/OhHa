@@ -1,7 +1,5 @@
 package shakkilabra.shakkilabra;
 
-import Assets.EnumVari;
-import Assets.Sotilas;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -12,11 +10,16 @@ import junit.framework.TestSuite;
 public class AppTest
         extends TestCase {
 
-    Sotilas s = new Sotilas(EnumVari.M, 4, 4);
-
-    public void luotuSotilasOikeassaKordinaatissa() {
-        int x = s.getX();
-
-        assertEquals(4, x);
+    public AppTest(String testName) {
+        super(testName);
     }
+
+    public static Test suite() {
+        return new TestSuite(AppTest.class);
+    }
+
+    public void testApp() {
+        assertTrue(true);
+    }
+
 }
