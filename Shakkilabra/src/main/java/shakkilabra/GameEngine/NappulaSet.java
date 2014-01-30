@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GameEngine;
+package shakkilabra.GameEngine;
 
-import Assets.Kordinaatti;
-import Assets.Nappula;
+import shakkilabra.Assets.Kordinaatti;
+import shakkilabra.Assets.Nappula;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,10 +63,18 @@ public class NappulaSet {
         return false;
     }
 
+    public Nappula annaValittuNappula() {
+        for (Nappula n : this.nappulat) {
+            if (n.isValittu()) {
+                return n;
+            }
+        }
+        return null;
+    }
+
     /*
      * DEBUG // asciipelimoottori
      */
-    
     public void tulostaNappulat() {
         for (Nappula n : this.nappulat) {
             if (n.isElossa()) {

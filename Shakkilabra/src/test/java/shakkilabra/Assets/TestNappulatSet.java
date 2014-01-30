@@ -5,10 +5,7 @@
  */
 package shakkilabra.Assets;
 
-import Assets.EnumTyyppi;
-import Assets.EnumVari;
-import Assets.Sotilas;
-import GameEngine.NappulaSet;
+import shakkilabra.GameEngine.NappulaSet;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

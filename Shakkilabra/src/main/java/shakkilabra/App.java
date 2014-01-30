@@ -1,6 +1,7 @@
 package shakkilabra;
 
-import GameEngine.Pelimoottori;
+
+import shakkilabra.Grafiikka.Grafiikkamoottori;
 
 /**
  * Hello world!
@@ -9,9 +10,12 @@ import GameEngine.Pelimoottori;
 public class App {
 
     public static void main(String[] args) {
-
-        Pelimoottori peli = new Pelimoottori();
-        peli.graafinenPeliRun();
+        
+        Grafiikkamoottori peli = new Grafiikkamoottori();
+        peli.luoPeli();
+        peli.run();
+        //Pelimoottori peli = new Pelimoottori();
+        //peli.graafinenPeliRun();
         //peli.testipeliRun();
         
     }

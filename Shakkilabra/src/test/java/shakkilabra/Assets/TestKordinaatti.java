@@ -5,11 +5,6 @@
  */
 package shakkilabra.Assets;
 
-import Assets.EnumTyyppi;
-import Assets.EnumVari;
-import Assets.Kordinaatti;
-import Assets.Nappula;
-import Assets.Sotilas;
 import java.util.HashMap;
 import org.junit.After;
 import org.junit.AfterClass;

@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Grafiikka;
+package shakkilabra.Grafiikka;
 
-import Assets.EnumVari;
-import GameEngine.NappulaSet;
-import java.awt.BorderLayout;
+import shakkilabra.Assets.EnumVari;
+import shakkilabra.GameEngine.NappulaSet;
+import shakkilabra.GameEngine.Pelimoottori;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -23,15 +23,24 @@ import javax.swing.SwingConstants;
  *
  * @author marko
  */
-public class Grafiikkamoottori {
+public final class Grafiikkamoottori {
 
     static Font font = new Font("Sans-Serif", Font.PLAIN, 64);
-    private final Lauta lauta;
-    private final NappulaSet nappulatSet;
+    private Pelimoottori pelimoottori;
+    private Lauta lauta;
+    private NappulaSet nappulatSet;
 
-    public Grafiikkamoottori(Lauta lauta, NappulaSet nappulat) {
-        this.lauta = lauta;
-        this.nappulatSet = nappulat;
+    public Grafiikkamoottori() {
+        this.pelimoottori = new Pelimoottori();
+        this.nappulatSet = new NappulaSet();
+        this.lauta = new Lauta();
+        //Lauta lauta, NappulaSet nappulat
+
+    }
+
+    public void luoPeli() {
+        this.pelimoottori.luoSotilaatLaudalle(this.nappulatSet);
+        //this.nappulatSet = this.pelimoottori.getNappulatSet();
     }
 
     public void run() {
@@ -45,15 +54,8 @@ public class Grafiikkamoottori {
          Mustat "\u265A", "\u265B", "\u265C", "\u265D", "\u265E", "\u265F"
          Ruudut Color.white Color.gray
          */
-     
-        piirraGraafinenRuudukko(gui);
-        /*   JLabel l = new JLabel("rai rai rai");
-         l.setFont(font);
-         l.setOpaque(true);
-         p.add(l);
-         p.add(gui);
-         frame.getContentPane().add(p);*/
 
+        piirraGraafinenRuudukko(gui);
         frame.getContentPane().add(gui);
         frame.pack();
         frame.setVisible(true);
@@ -71,45 +73,56 @@ public class Grafiikkamoottori {
             for (int j = 0; j < 8; j++) {
                 if (this.lauta.getRuutu(i, j).getVari() == EnumVari.V) {
                     if (this.nappulatSet.getNappula(i, j) != null) {
-                        piirraRuutu(this.nappulatSet.getNappula(i, j).uCodeNappula(), gui, Color.white);
+                        piirraRuutu(this.nappulatSet.getNappula(i, j).uCodeNappula(), gui, Color.white, i, j);
                     } else {
-                        piirraRuutu("   ", gui, Color.white);
+                        piirraRuutu(" ", gui, Color.white, i, j);
                     }
                 } else {
                     if (this.nappulatSet.getNappula(i, j) != null) {
-                        piirraRuutu(this.nappulatSet.getNappula(i, j).uCodeNappula(), gui, Color.gray);
+                        piirraRuutu(this.nappulatSet.getNappula(i, j).uCodeNappula(), gui, Color.gray, i, j);
                     } else {
-                        piirraRuutu("   ", gui, Color.gray);
+                        piirraRuutu(" ", gui, Color.gray, i, j);
                     }
                 }
             }
-             tulostaPystyKordinaatti(i, gui);
+            tulostaPystyKordinaatti(i, gui);
         }
         tulostaVaakaKordinaatti(gui);
     }
 
-    public static void piirraRuutu(String s, Container c, Color d) {
+    public void piirraRuutu(String s, Container c, Color d, int x, int y) {
 
         JLabel l = new JLabel(s);
         l.setHorizontalAlignment(SwingConstants.CENTER);
         l.setFont(font);
         l.setOpaque(true);
         l.setBackground(d);
-        
-
+        l.addMouseListener(new HiirenKuuntelija(this, l, this.pelimoottori, this.nappulatSet, x, y));
         c.add(l);
     }
 
     public void tulostaPystyKordinaatti(int i, JPanel gui) {
-        piirraRuutu(Integer.toString(8 - i), gui, null);
+        piirraRuutu(Integer.toString(8 - i), gui, null, 10, 10);
 
     }
 
     public void tulostaVaakaKordinaatti(JPanel gui) {
         String kord = " ABCDEFGH  ";
         for (int i = 0; i < 9; i++) {
-            piirraRuutu("" + kord.charAt(i), gui, null);
+            piirraRuutu( "" + kord.charAt(i), gui, null, 10, 10);
         }
+    }
+
+    public Pelimoottori getPelimoottori() {
+        return pelimoottori;
+    }
+
+    public Lauta getLauta() {
+        return lauta;
+    }
+
+    public NappulaSet getNappulatSet() {
+        return nappulatSet;
     }
 
 }

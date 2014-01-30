@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Grafiikka;
+package shakkilabra.Grafiikka;
 
-import Assets.EnumVari;
+import javax.swing.JLabel;
+import shakkilabra.Assets.EnumVari;
 
 /**
  *
  * @author marko
  */
-public class Ruutu {
+public class Ruutu extends JLabel{
 
     private EnumVari vari;
 

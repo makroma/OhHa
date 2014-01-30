@@ -1,4 +1,4 @@
-package Assets;
+package shakkilabra.Assets;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +10,7 @@ public abstract class Nappula {
     private Kordinaatti kordinaatti;
     private int siirtojenMaara;
     private boolean elossa;
+    private boolean valittu;
 
     public Nappula(EnumTyyppi nappulat, EnumVari vari, Kordinaatti kord) {
         this.tyyppi = nappulat;
@@ -92,4 +93,14 @@ public abstract class Nappula {
     public String toString() {
         return this.vari + "" + this.tyyppi + " " + this.kordinaatti.getX() + "," + this.kordinaatti.getY() + " Siirtoja:" + this.siirtojenMaara;
     }
+
+    public boolean isValittu() {
+        return valittu;
+    }
+
+    public void setValittu(boolean valittu) {
+        this.valittu = valittu;
+    }
+
+   
 }

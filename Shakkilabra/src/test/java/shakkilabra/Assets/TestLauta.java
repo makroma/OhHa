@@ -5,8 +5,7 @@
  */
 package shakkilabra.Assets;
 
-import Assets.EnumVari;
-import Grafiikka.Lauta;
+import shakkilabra.Grafiikka.Lauta;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

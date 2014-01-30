@@ -3,4 +3,6 @@ Tuntikirjanpito
 16.1. 1tunti GitHub ja muut alkuvalmistelut
 23.1. 2 tuntia ohjelmointia
 26.1. 4 tuntia ohjelmointia
+28.1. 5 tuntia ohjelmointia
+30.1. 4 tuntia ohjelmointia
 
