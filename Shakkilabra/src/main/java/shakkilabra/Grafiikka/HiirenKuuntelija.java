@@ -25,7 +25,6 @@ public class HiirenKuuntelija implements MouseListener {
     private int x;
     private int y;
     private Color color;
-    private Kordinaatti kordinaatti;
     private Grafiikkamoottori grafiikkamoottori;
 
     public HiirenKuuntelija(Grafiikkamoottori g, JLabel j, Pelimoottori p, NappulaSet n, int x, int y) {
@@ -72,11 +71,13 @@ public class HiirenKuuntelija implements MouseListener {
 //            System.out.println(x+","+y);
 //        }
         if (this.nappulat.getNappula(x, y) != null) {
-            System.out.println("Nappula valittu" + x + ", " + y);
+            System.out.println("Nappula valittu " + nappulat.getNappula(x, y));
+            this.nappulat.tulostaMahdollisetSiirrot(x, y);
             this.nappulat.getNappula(x, y).setValittu(true);
         } else if (this.nappulat.annaValittuNappula() != null) {
-            System.out.println("Liikutetaan nappulaa " + this.nappulat.annaValittuNappula().getKordinaatti().getXY() + " sijaintiin " + x + ", " + y);
-            this.nappulat.annaValittuNappula().liiku(x, y);
+            System.out.println("Liikutetaan nappulaa " + this.nappulat.annaValittuNappula() + " sijaintiin " + x + ", " + y);
+            this.pelimoottori.liikutaNappulaa(nappulat, x, y);
+            //this.nappulat.annaValittuNappula().liiku(x, y);
             this.nappulat.annaValittuNappula().setValittu(false);
             grafiikkamoottori.run();
         }

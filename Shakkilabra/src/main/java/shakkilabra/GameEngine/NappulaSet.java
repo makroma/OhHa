@@ -53,11 +53,24 @@ public class NappulaSet {
         return this.nappulat.size();
     }
 
-    //Onko Tämä vielä kesken??
-    private boolean onkoRuutuSiirroissa(Nappula n, int x, int y) {
+    //Onko Tämä vielä kesken?? Pelimoottorin tarkistus käyttää tätä
+    public boolean onkoRuutuSiirroissa(Nappula n, int x, int y) {
         for (Kordinaatti k : n.getMahdollisetSiirrot().keySet()) {
             if (k.getX() == x && k.getY() == y) {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    //Korjaa tättätä!
+    public boolean syokoValittuNappulaSijaintiin(int x, int y) {
+        for (Kordinaatti k : annaValittuNappula().getMahdollisetSiirrot().keySet()) {
+            if (!onkoRuuduVapaa(k.getX(), k.getY())) {
+                System.out.println("sijainnista löytyi nappula");
+                if (annaValittuNappula().getMahdollisetSiirrot().get(k)) {
+                    return true;
+                } 
             }
         }
         return false;

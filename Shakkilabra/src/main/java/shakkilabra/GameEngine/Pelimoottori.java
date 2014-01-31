@@ -9,6 +9,7 @@ import shakkilabra.Grafiikka.Lauta;
 
 import shakkilabra.Assets.EnumTyyppi;
 import shakkilabra.Assets.EnumVari;
+import shakkilabra.Assets.Kordinaatti;
 import shakkilabra.Assets.Sotilas;
 import shakkilabra.Grafiikka.Grafiikkamoottori;
 
@@ -19,18 +20,18 @@ import shakkilabra.Grafiikka.Grafiikkamoottori;
 public class Pelimoottori {
 
     private Lauta lauta;
-   // private NappulaSet nappulat;
+    // private NappulaSet nappulat;
 
     public Pelimoottori() {
 
-       this.lauta = new Lauta();
-     //   this.nappulat = new NappulaSet();
+        this.lauta = new Lauta();
+        //   this.nappulat = new NappulaSet();
 
     }
 
     public void graafinenPeliRun() {
         System.out.println("luodaan sotilaat");
-       // luoSotilaatLaudalle();
+        // luoSotilaatLaudalle();
         System.out.println("Luodaan Graafinen peli");
         // Grafiikka.Grafiikkamoottori peli = new Grafiikkamoottori(lauta, this.nappulat);
         System.out.println("Käynnistetään peliä....");
@@ -63,7 +64,6 @@ public class Pelimoottori {
 //        nappulat.getNappula(3, 5).liiku(4, 5);
 //        nappulat.tulostaNappulat();
 //        nappulat.asciiLautaTulostin();
-
     }
 
     public void luoSotilaatLaudalle(NappulaSet nappulat) {
@@ -90,20 +90,35 @@ public class Pelimoottori {
 
     }
 
-    public void liikutaNappulaa(NappulaSet nappulat, int x, int y, int uusiX, int uusiY) {
+    public void liikutaNappulaa(NappulaSet nappulat, int x, int y) {
 
         //jos sotilas
-        if (nappulat.getNappula(x, y).getTyyppi() == EnumTyyppi.S) {
-            if (nappulat.getNappula(x, y).onkoMahdollinenSiirto(uusiX, uusiY)) {
+        if (nappulat.annaValittuNappula().getTyyppi() == EnumTyyppi.S) {
+            System.out.println("Tyyppi Sotilas: " + nappulat.annaValittuNappula());
+            if (nappulat.onkoRuutuSiirroissa(nappulat.annaValittuNappula(), x, y)) {
+                System.out.println("Siirto mahdollinen " + x + "," + y);
+
                 //jos liikkuu eteenpäin, onko ruutu tyhjä
+                if (nappulat.onkoRuuduVapaa(x, y)) {
+                    System.out.println("Ruutu on vapaa");
+                   if (!nappulat.syokoValittuNappulaSijaintiin(x, y)) {
+                        nappulat.annaValittuNappula().liiku(x, y);
+                    } else {
+                        System.out.println("Voit liikkua vai syödessä tähän suuntaan");
+                    }
+                } else {
+                    System.out.println("Syödään nappula");
+                    if (nappulat.syokoValittuNappulaSijaintiin(x, y)) {
+                        nappulat.poistaNappula(nappulat.getNappula(x, y));
+                        nappulat.annaValittuNappula().liiku(x, y);
+                    }
+                }
 
                 //jos liikkuu viistoon, niin syökö silloin
             } else {
-                System.out.println("Siirto ei mahdollinen");
+                System.out.println("Siirto ei mahdollinen" + x + "," + y);
             }
         }
-
-        nappulat.getNappula(x, y).liiku(uusiX, uusiY);
 
     }
 

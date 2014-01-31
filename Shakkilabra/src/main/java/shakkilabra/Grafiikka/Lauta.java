@@ -14,7 +14,7 @@ public final class Lauta {
     public Lauta() {
         this.ruutu = new Ruutu[8][8];
         luoRuudukko();
-        asciiRuutuTulostin();
+        //asciiRuutuTulostin();
     }
 
     public void luoRuudukko() {

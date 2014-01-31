@@ -11,6 +11,7 @@ public abstract class Nappula {
     private int siirtojenMaara;
     private boolean elossa;
     private boolean valittu;
+    private HashMap<Kordinaatti, Boolean> mahdollisetSiirrot;
 
     public Nappula(EnumTyyppi nappulat, EnumVari vari, Kordinaatti kord) {
         this.tyyppi = nappulat;
@@ -18,6 +19,7 @@ public abstract class Nappula {
         this.kordinaatti = kord;
         this.siirtojenMaara = 0;
         this.elossa = true;
+        this.mahdollisetSiirrot = mahdollisetSiirrot();
     }
     /*
      *  Abstraktit luokat
@@ -41,13 +43,16 @@ public abstract class Nappula {
         this.siirtojenMaara++;
     }
 
-    public boolean onkoMahdollinenSiirto(int x, int y) {
-
-        for (Kordinaatti k : mahdollisetSiirrot().keySet()) {
-            if (k.getX() == x && k.getY() == y) {
+    public boolean onkoMahdollinenSiirto(Kordinaatti kord) {
+        System.out.println("Tarkistetaan siirron mahdollisuus...");
+        
+        
+        for (Kordinaatti k : mahdollisetSiirrot.keySet()) {
+            if (k.equals(kord)) {
                 return true;
             }
         }
+        System.out.println("False");
         return false;
     }
 
