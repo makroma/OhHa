@@ -45,10 +45,12 @@ public abstract class Nappula {
 
     public boolean onkoMahdollinenSiirto(Kordinaatti kord) {
         System.out.println("Tarkistetaan siirron mahdollisuus...");
+        if(getMahdollisetSiirrot().containsKey(kord)){
+            return true;
+        }
         
-        
-        for (Kordinaatti k : mahdollisetSiirrot.keySet()) {
-            if (k.equals(kord)) {
+        for (Kordinaatti k : getMahdollisetSiirrot().keySet()) {
+            if(k.getX()==kord.getX()&&k.getY()==kord.getY()){
                 return true;
             }
         }

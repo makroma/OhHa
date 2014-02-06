@@ -22,7 +22,7 @@ public class TestKordinaatti {
     Nappula nappula;
 
     public TestKordinaatti() {
-        nappula = new Sotilas(EnumVari.V, 2, 1);
+        nappula = new Sotilas(EnumVari.VALKOINEN, 2, 1);
     }
 
     @BeforeClass

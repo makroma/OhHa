@@ -24,11 +24,11 @@ public final class Lauta {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (valkoinen) {
-                    this.ruutu[i][j] = new Ruutu(EnumVari.V);
+                    this.ruutu[i][j] = new Ruutu(EnumVari.VALKOINEN);
                     valkoinen = false;
                 } else {
                     //Pelilauta ruutu = new Pelilauta(new Ruutu(Vari.MUSTA));
-                    this.ruutu[i][j] = new Ruutu(EnumVari.M);
+                    this.ruutu[i][j] = new Ruutu(EnumVari.MUSTA);
                     valkoinen = true;
                 }
             }
@@ -50,10 +50,10 @@ public final class Lauta {
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (this.ruutu[i][j].getVari() == EnumVari.V) {
+                if (this.ruutu[i][j].getVari() == EnumVari.VALKOINEN) {
                     System.out.print("\u2591");
                 }
-                if (this.ruutu[i][j].getVari() == EnumVari.M) {
+                if (this.ruutu[i][j].getVari() == EnumVari.MUSTA) {
                     System.out.print("\u2593");
                 }
 

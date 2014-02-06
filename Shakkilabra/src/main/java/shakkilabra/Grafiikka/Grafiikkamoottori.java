@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -29,32 +29,44 @@ public final class Grafiikkamoottori {
     private Pelimoottori pelimoottori;
     private Lauta lauta;
     private NappulaSet nappulatSet;
+    private JFrame frame;
+    private JPanel gui;
 
     public Grafiikkamoottori() {
         this.pelimoottori = new Pelimoottori();
         this.nappulatSet = new NappulaSet();
         this.lauta = new Lauta();
+
+        this.frame = new JFrame("TopLevelDemo");
+        this.frame.setPreferredSize(new Dimension(900, 800));
+        this.gui = new JPanel(new GridLayout(9, 10, 4, 4));
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Lauta lauta, NappulaSet nappulat
 
     }
 
     public void luoPeli() {
         this.pelimoottori.luoSotilaatLaudalle(this.nappulatSet);
-        //this.nappulatSet = this.pelimoottori.getNappulatSet();
+//        this.pelimoottori.luoSotilaatLaudalle(this.nappulatSet);
+//        this.frame = new JFrame("TopLevelDemo");
+//        this.frame.setPreferredSize(new Dimension(900, 800));
+//        this.gui = new JPanel(new GridLayout(9, 10, 4, 4));
+//        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        //this.nappulatSet = this.pelimoottori.getNappulatSet(); 
     }
 
     public void run() {
-        JFrame frame = new JFrame("TopLevelDemo");
-        frame.setPreferredSize(new Dimension(900, 800));
-        // JPanel p = new JPanel(new BorderLayout());
-        JPanel gui = new JPanel(new GridLayout(9, 10, 4, 4));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        /* 
-         Valkoiset "\u2654", "\u2655", "\u2656", "\u2657", "\u2658", "\u2659"
-         Mustat "\u265A", "\u265B", "\u265C", "\u265D", "\u265E", "\u265F"
-         Ruudut Color.white Color.gray
-         */
+//        JFrame frame = new JFrame("TopLevelDemo");
+//        frame.setPreferredSize(new Dimension(900, 800));
+//        // JPanel p = new JPanel(new BorderLayout());
+//        JPanel gui = new JPanel(new GridLayout(9, 10, 4, 4));
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        
 
+        this.frame = new JFrame("TopLevelDemo");
+        this.frame.setPreferredSize(new Dimension(900, 800));
+        this.gui = new JPanel(new GridLayout(9, 10, 4, 4));
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         piirraGraafinenRuudukko(gui);
         frame.getContentPane().add(gui);
         frame.pack();
@@ -65,19 +77,25 @@ public final class Grafiikkamoottori {
         // JOptionPane.showMessageDialog(null, gui);
     }
 
+    public void paivita() {
+
+        piirraGraafinenRuudukko(this.gui);
+
+    }
+
     private void piirraGraafinenRuudukko(JPanel gui) {
         // tulostaVaakaKordinaatti(gui);
 
         for (int i = 0; i < 8; i++) {
             tulostaPystyKordinaatti(i, gui);
             for (int j = 0; j < 8; j++) {
-                if (this.lauta.getRuutu(i, j).getVari() == EnumVari.V) {
+                if (this.lauta.getRuutu(i, j).getVari() == EnumVari.VALKOINEN) {
                     if (this.nappulatSet.getNappula(i, j) != null) {
                         piirraRuutu(this.nappulatSet.getNappula(i, j).uCodeNappula(), gui, Color.white, i, j);
                     } else {
                         piirraRuutu(" ", gui, Color.white, i, j);
                     }
-                } else {
+                } else if (this.lauta.getRuutu(i, j).getVari() == EnumVari.MUSTA) {
                     if (this.nappulatSet.getNappula(i, j) != null) {
                         piirraRuutu(this.nappulatSet.getNappula(i, j).uCodeNappula(), gui, Color.gray, i, j);
                     } else {
@@ -109,7 +127,7 @@ public final class Grafiikkamoottori {
     public void tulostaVaakaKordinaatti(JPanel gui) {
         String kord = " ABCDEFGH  ";
         for (int i = 0; i < 9; i++) {
-            piirraRuutu( "" + kord.charAt(i), gui, null, 10, 10);
+            piirraRuutu("" + kord.charAt(i), gui, null, 10, 10);
         }
     }
 

@@ -12,6 +12,6 @@ package shakkilabra.Assets;
  */
 public enum EnumVari {
     
-    V, M
+    VALKOINEN, MUSTA
     
 }

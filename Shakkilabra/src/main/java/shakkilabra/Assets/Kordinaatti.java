@@ -27,8 +27,8 @@ public class Kordinaatti {
         this.x = x;
     }
 
-    public int getXY() {
-        return this.x + this.y;
+    public String getXY() {
+        return this.x + "," + this.y;
     }
 
     public int getY() {

@@ -61,23 +61,23 @@ public class TestLauta {
     public void onkoLautaOikeanVarinen() {
 
         for (int i = 0; i < 4; i += 2) {
-            assertEquals(EnumVari.V, lauta.getRuudukko()[i][0].getVari());
-            assertEquals(EnumVari.M, lauta.getRuudukko()[i][1].getVari());
-            assertEquals(EnumVari.V, lauta.getRuudukko()[i][2].getVari());
-            assertEquals(EnumVari.M, lauta.getRuudukko()[i][3].getVari());
-            assertEquals(EnumVari.V, lauta.getRuudukko()[i][4].getVari());
-            assertEquals(EnumVari.M, lauta.getRuudukko()[i][5].getVari());
-            assertEquals(EnumVari.V, lauta.getRuudukko()[i][6].getVari());
-            assertEquals(EnumVari.M, lauta.getRuudukko()[i][7].getVari());
+            assertEquals(EnumVari.VALKOINEN, lauta.getRuudukko()[i][0].getVari());
+            assertEquals(EnumVari.MUSTA, lauta.getRuudukko()[i][1].getVari());
+            assertEquals(EnumVari.VALKOINEN, lauta.getRuudukko()[i][2].getVari());
+            assertEquals(EnumVari.MUSTA, lauta.getRuudukko()[i][3].getVari());
+            assertEquals(EnumVari.VALKOINEN, lauta.getRuudukko()[i][4].getVari());
+            assertEquals(EnumVari.MUSTA, lauta.getRuudukko()[i][5].getVari());
+            assertEquals(EnumVari.VALKOINEN, lauta.getRuudukko()[i][6].getVari());
+            assertEquals(EnumVari.MUSTA, lauta.getRuudukko()[i][7].getVari());
 
-            assertEquals(EnumVari.M, lauta.getRuudukko()[i + 1][0].getVari());
-            assertEquals(EnumVari.V, lauta.getRuudukko()[i + 1][1].getVari());
-            assertEquals(EnumVari.M, lauta.getRuudukko()[i + 1][2].getVari());
-            assertEquals(EnumVari.V, lauta.getRuudukko()[i + 1][3].getVari());
-            assertEquals(EnumVari.M, lauta.getRuudukko()[i + 1][4].getVari());
-            assertEquals(EnumVari.V, lauta.getRuudukko()[i + 1][5].getVari());
-            assertEquals(EnumVari.M, lauta.getRuudukko()[i + 1][6].getVari());
-            assertEquals(EnumVari.V, lauta.getRuudukko()[i + 1][7].getVari());
+            assertEquals(EnumVari.MUSTA, lauta.getRuudukko()[i + 1][0].getVari());
+            assertEquals(EnumVari.VALKOINEN, lauta.getRuudukko()[i + 1][1].getVari());
+            assertEquals(EnumVari.MUSTA, lauta.getRuudukko()[i + 1][2].getVari());
+            assertEquals(EnumVari.VALKOINEN, lauta.getRuudukko()[i + 1][3].getVari());
+            assertEquals(EnumVari.MUSTA, lauta.getRuudukko()[i + 1][4].getVari());
+            assertEquals(EnumVari.VALKOINEN, lauta.getRuudukko()[i + 1][5].getVari());
+            assertEquals(EnumVari.MUSTA, lauta.getRuudukko()[i + 1][6].getVari());
+            assertEquals(EnumVari.VALKOINEN, lauta.getRuudukko()[i + 1][7].getVari());
         }
     }
 }

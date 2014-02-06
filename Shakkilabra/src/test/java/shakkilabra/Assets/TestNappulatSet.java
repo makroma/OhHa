@@ -23,10 +23,11 @@ public class TestNappulatSet {
 
     public TestNappulatSet() {
         nappulaSet = new NappulaSet();
-        nappulaSet.lisaaNappula(new Sotilas(EnumVari.M, 1, 3));
-        nappulaSet.lisaaNappula(new Sotilas(EnumVari.M, 1, 4));
-        nappulaSet.lisaaNappula(new Sotilas(EnumVari.M, 1, 5));
-        nappulaSet.lisaaNappula(new Sotilas(EnumVari.M, 1, 6));
+        nappulaSet.lisaaNappula(new Sotilas(EnumVari.MUSTA, 1, 3));
+        nappulaSet.lisaaNappula(new Sotilas(EnumVari.MUSTA, 1, 4));
+        nappulaSet.lisaaNappula(new Sotilas(EnumVari.MUSTA, 1, 5));
+        nappulaSet.lisaaNappula(new Sotilas(EnumVari.MUSTA, 1, 6));
+        nappulaSet.getNappula(1, 5).setValittu(true);
     }
 
     @BeforeClass
@@ -56,7 +57,7 @@ public class TestNappulatSet {
 
     @Test
     public void hakeeNappulanSetista() {
-        assertEquals(EnumTyyppi.S, this.nappulaSet.getNappula(1, 3).getTyyppi());
+        assertEquals(EnumTyyppi.SOTILAS, this.nappulaSet.getNappula(1, 3).getTyyppi());
     }
 
     @Test
@@ -65,5 +66,41 @@ public class TestNappulatSet {
         assertEquals(true, this.nappulaSet.onkoRuuduVapaa(3, 3));
     }
 
- 
+    @Test
+    public void valittuNappulaOnValittu() {
+        assertEquals(true, this.nappulaSet.annaValittuNappula().isValittu());
+    }
+
+    @Test
+    public void valittuNappulaOnKordinaatissa() {
+        assertEquals("1,5", this.nappulaSet.annaValittuNappula().getKordinaatti().getXY());
+    }
+
+    @Test
+    public void onkoRuutuValitunSiirroissaTrue() {
+        assertEquals(true, this.nappulaSet.onkoRuutuValitunNappulanSiirroissa(2, 5));
+    }
+
+    @Test
+    public void onkoRuutuValitunSiirroissaTrue2() {
+        assertEquals(true, this.nappulaSet.onkoRuutuValitunNappulanSiirroissa(2, 6));
+    }
+
+    @Test
+    public void onkoRuutuValitunSiirroissaFalse() {
+        assertEquals(false, this.nappulaSet.onkoRuutuValitunNappulanSiirroissa(6, 5));
+        //assertEquals(true, this.nappulaSet.annaValittuNappula().getMahdollisetSiirrot().containsKey(new Kordinaatti(2, 5)));
+    }
+
+    @Test
+    public void onkoRuutuValitunSiirroissaFalse2() {
+        assertEquals(false, this.nappulaSet.onkoRuutuValitunNappulanSiirroissa(3, 6));
+        //assertEquals(true, this.nappulaSet.annaValittuNappula().getMahdollisetSiirrot().containsKey(new Kordinaatti(2, 5)));
+    }
+
+    @Test
+    public void tulostaNappulanSiirrotOikein() {
+        //  assertEquals("", this.nappulaSet.tulostaValitunNappulanMahdollisetSiirrot());
+    }
+
 }

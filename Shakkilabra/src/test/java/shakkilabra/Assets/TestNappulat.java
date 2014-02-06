@@ -17,7 +17,7 @@ public class TestNappulat {
     Nappula nappula;
 
     public TestNappulat() {
-        nappula = new Sotilas(EnumVari.M, 1, 1);
+        nappula = new Sotilas(EnumVari.MUSTA, 1, 1);
     }
 
 //    @BeforeClass
@@ -42,8 +42,8 @@ public class TestNappulat {
 
     @Test
     public void sotilasOnValkoinenSotilas() {
-        assertEquals(EnumTyyppi.S, this.nappula.getTyyppi());
-        assertEquals(EnumVari.M, this.nappula.getVari());
+        assertEquals(EnumTyyppi.SOTILAS, this.nappula.getTyyppi());
+        assertEquals(EnumVari.MUSTA, this.nappula.getVari());
     }
 
     @Test
@@ -74,4 +74,30 @@ public class TestNappulat {
         this.nappula.kasvataSiirtojenMaaraaYhdella();
         assertEquals(3, this.nappula.getMahdollisetSiirrot().keySet().size());
     }
+
+    @Test
+    public void onkoNappulaValittuFalseAluksi() {
+
+        assertEquals(false, this.nappula.isValittu());
+    }
+
+    @Test
+    public void onkoNappulaValittuTrue() {
+        this.nappula.setValittu(true);
+        assertEquals(true, this.nappula.isValittu());
+    }
+
+    @Test
+    public void onkoMahdotonSiirtoFalse() {
+        assertEquals(false, this.nappula.onkoMahdollinenSiirto(new Kordinaatti(3, 3)));
+
+    }
+
+    @Test
+    public void onkoValitunNappulanMahdollinenSiirtoTrue() {
+        this.nappula.setValittu(true);
+        assertEquals(true, this.nappula.isValittu());
+        assertEquals(true, this.nappula.onkoMahdollinenSiirto(new Kordinaatti(2, 1)));
+    }
+
 }

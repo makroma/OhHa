@@ -11,6 +11,6 @@ package shakkilabra.Assets;
  */
 public enum EnumTyyppi {
 
-    S, T, H, L, Q, K
+    SOTILAS, TORNI, HEVONEN, LAHETTI, KUNINGATAR, KUNINGAS
 
 }

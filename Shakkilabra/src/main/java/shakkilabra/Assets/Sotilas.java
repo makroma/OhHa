@@ -16,7 +16,7 @@ import java.util.List;
 public class Sotilas extends Nappula {
 
     public Sotilas(EnumVari vari, int x, int y) {
-        super(EnumTyyppi.S, vari, new Kordinaatti(x, y));
+        super(EnumTyyppi.SOTILAS, vari, new Kordinaatti(x, y));
     }
 
     @Override
@@ -34,7 +34,7 @@ public class Sotilas extends Nappula {
     @Override
     public String uCodeNappula() {
         String s;
-        if (super.getVari() == EnumVari.V) {
+        if (super.getVari() == EnumVari.VALKOINEN) {
             s = "\u2659";
         } else {
             s = "\u265F";
@@ -48,28 +48,28 @@ public class Sotilas extends Nappula {
 
         //Jos siirtojenmäärä = 0 niin sotilasta voi siirtää yhden tai kaksi eteenpäin
         if (super.getSiirtojenMaara() == 0) {
-            if (super.getVari() == EnumVari.M) {
+            if (super.getVari() == EnumVari.MUSTA) {
                 siirrot.put(new Kordinaatti(super.getKordinaatti().getX() + 1, super.getKordinaatti().getY()), Boolean.FALSE);
                 siirrot.put(new Kordinaatti(super.getKordinaatti().getX() + 2, super.getKordinaatti().getY()), Boolean.FALSE);
-            } else if (super.getVari() == EnumVari.V) {
+            } else if (super.getVari() == EnumVari.VALKOINEN) {
                 siirrot.put(new Kordinaatti(super.getKordinaatti().getX() - 1, super.getKordinaatti().getY()), Boolean.FALSE);
                 siirrot.put(new Kordinaatti(super.getKordinaatti().getX() - 2, super.getKordinaatti().getY()), Boolean.FALSE);
             }
         }
         // Voi liikkua eteenpäin, (jos edessä ei ole toista nappulaa, mutta sitä ei tässä testata)
         if (super.getSiirtojenMaara() >= 1) {
-            if (super.getVari() == EnumVari.M) {
+            if (super.getVari() == EnumVari.MUSTA) {
                 siirrot.put(new Kordinaatti(super.getKordinaatti().getX() + 1, super.getKordinaatti().getY()), Boolean.FALSE);
-            } else if (super.getVari() == EnumVari.V) {
+            } else if (super.getVari() == EnumVari.VALKOINEN) {
                 siirrot.put(new Kordinaatti(super.getKordinaatti().getX() - 1, super.getKordinaatti().getY()), Boolean.FALSE);
             }
         }
         //voi syödä viistoihin, eli palauttaa true
         
-         if (super.getVari() == EnumVari.M) {
+         if (super.getVari() == EnumVari.MUSTA) {
          siirrot.put(new Kordinaatti(super.getKordinaatti().getX() + 1, super.getKordinaatti().getY() + 1), Boolean.TRUE);
          siirrot.put(new Kordinaatti(super.getKordinaatti().getX() + 1, super.getKordinaatti().getY() - 1), Boolean.TRUE);
-         } else if (super.getVari() == EnumVari.V) {
+         } else if (super.getVari() == EnumVari.VALKOINEN) {
          siirrot.put(new Kordinaatti(super.getKordinaatti().getX() - 1, super.getKordinaatti().getY() + 1), Boolean.TRUE);
          siirrot.put(new Kordinaatti(super.getKordinaatti().getX() - 1, super.getKordinaatti().getY() - 1), Boolean.TRUE);
          }

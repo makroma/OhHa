@@ -14,9 +14,5 @@ public class App {
         Grafiikkamoottori peli = new Grafiikkamoottori();
         peli.luoPeli();
         peli.run();
-        //Pelimoottori peli = new Pelimoottori();
-        //peli.graafinenPeliRun();
-        //peli.testipeliRun();
-        
     }
 }
