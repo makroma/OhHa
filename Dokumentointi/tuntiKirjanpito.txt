@@ -5,4 +5,7 @@ Tuntikirjanpito
 26.1. 4 tuntia ohjelmointia
 28.1. 5 tuntia ohjelmointia
 30.1. 4 tuntia ohjelmointia
+06.2. 3 tuntia, vähän ohjelmointia ja sekvenssikaavion teko
+07.2. 2 tuntia ohjelmointia
+08.2. 7 tuntia ohjelmointia
 
