@@ -5,13 +5,10 @@
  */
 package shakkilabra.GameEngine;
 
-import shakkilabra.Grafiikka.Lauta;
-
 import shakkilabra.Assets.EnumTyyppi;
 import shakkilabra.Assets.EnumVari;
-import shakkilabra.Assets.Kordinaatti;
+import shakkilabra.Assets.Kuningas;
 import shakkilabra.Assets.Sotilas;
-import shakkilabra.Grafiikka.Grafiikkamoottori;
 
 /**
  *
@@ -23,16 +20,15 @@ public class Pelimoottori {
 
     }
 
-    public void graafinenPeliRun() {
-        System.out.println("luodaan sotilaat");
-        // luoSotilaatLaudalle();
-        System.out.println("Luodaan Graafinen peli");
-        // Grafiikka.Grafiikkamoottori peli = new Grafiikkamoottori(lauta, this.nappulat);
-        System.out.println("Käynnistetään peliä....");
-        //peli.run();
-
-    }
-
+//    public void graafinenPeliRun() {
+//        System.out.println("luodaan sotilaat");
+//        // luoSotilaatLaudalle();
+//        System.out.println("Luodaan Graafinen peli");
+//        // Grafiikka.Grafiikkamoottori peli = new Grafiikkamoottori(lauta, this.nappulat);
+//        System.out.println("Käynnistetään peliä....");
+//        //peli.run();
+//
+//    }
     public void testipeliRun() {
 
 //        luoSotilaatLaudalle();
@@ -62,6 +58,9 @@ public class Pelimoottori {
 
     public void luoSotilaatLaudalle(NappulaSet nappulat) {
         System.out.println("Luodaan Sotilaat...");
+
+        //luodaan valoinen kunngas
+        nappulat.lisaaNappula(new Kuningas(EnumVari.VALKOINEN, 7, 4));
         //luodaan valkoiset Sotilaat
         nappulat.lisaaNappula(new Sotilas(EnumVari.VALKOINEN, 6, 0));
         nappulat.lisaaNappula(new Sotilas(EnumVari.VALKOINEN, 6, 1));
@@ -71,6 +70,9 @@ public class Pelimoottori {
         nappulat.lisaaNappula(new Sotilas(EnumVari.VALKOINEN, 6, 5));
         nappulat.lisaaNappula(new Sotilas(EnumVari.VALKOINEN, 6, 6));
         nappulat.lisaaNappula(new Sotilas(EnumVari.VALKOINEN, 6, 7));
+
+        //luodaan musta kuningas
+        nappulat.lisaaNappula(new Kuningas(EnumVari.MUSTA, 0, 4));
 
         //luodaan mustat Sotilaat
         nappulat.lisaaNappula(new Sotilas(EnumVari.MUSTA, 1, 0));
@@ -84,65 +86,58 @@ public class Pelimoottori {
 
     }
 
-    public void liikutaNappulaa(NappulaSet nappulat, int x, int y) {
-        //jos sotilas
-        if (nappulat.annaValittuNappula().getTyyppi() == EnumTyyppi.SOTILAS) {
-            liikutaValittuaSotilasta(nappulat, x, y);
-        }
 
-        //Nappulan liikuttamisen jälkeen muutetaan valinta False
+    /*
+     *PELILOGIIKKA!
+     */
+    public void liikutaNappulaa(NappulaSet nappulat, int x, int y) {
+
+        liikkuukoValittuNappulaNain(nappulat, x, y);
         nappulat.annaValittuNappula().setValittu(false);
     }
 
-    private void liikutaValittuaSotilasta(NappulaSet nappulat, int x, int y) {
+    private void liikkuukoValittuNappulaNain(NappulaSet nappulat, int x, int y) {
 
-        System.out.println("Tyyppi Sotilas: " + nappulat.annaValittuNappula());
+        System.out.println("Tyyppi: " + nappulat.annaValittuNappula());
 
         if (nappulat.onkoRuutuValitunNappulanSiirroissa(x, y)) {
+            System.out.print("Siirto mahdollinen " + x + "," + y + ". ");
 
-            System.out.println("Siirto mahdollinen " + x + "," + y);
-
-            //jos liikkuu eteenpäin, onko ruutu tyhjä
-            if (nappulat.onkoRuuduVapaa(x, y)) {
-                System.out.println("Ruutu on vapaa");
-
-                //Jos ruutu on vapaa, niin onko se nappulan boolean "syö tähän" ruuduissa 
-                if (!nappulat.syokoValittuNappulaSijaintiin(x, y)) {
-                    System.out.println("Syökö Nappula tähän sijaintiin vai liikkuuko se testi: liikkuu");
-                    nappulat.annaValittuNappula().liiku(x, y);
-                } else {
-                    System.out.println("Voit liikkua vain syödessä tähän suuntaan");
-                }
-
-            } else {
-                //jos liikkuu viistoon, niin syökö silloin
-                System.out.println("Syödään nappula");
-                if (nappulat.syokoValittuNappulaSijaintiin(x, y)) {
-                    System.out.println("Valittu Nappula syö sijaintiin. Poistetaan nappulaa: " + nappulat.getNappula(x, y));
-                    
-                    nappulat.poistaNappula(nappulat.getNappula(x, y));
-                    System.out.println("Nappula poistettu");
-                    
-                    nappulat.annaValittuNappula().liiku(x, y);
-                    System.out.println("Liikutetaan valittu nappula sijaintiin..");
-                }
-            }
-
+            //Siirrytään seuraavaan vaiheeseen
+            liikkuukoVapaaseenRuutuunVaiSyo(nappulat, x, y);
         } else {
             System.out.println("Siirto ei mahdollinen" + x + "," + y);
         }
 
     }
 
+    private void liikkuukoVapaaseenRuutuunVaiSyo(NappulaSet nappulat, int x, int y) {
+        //Onko Ruutu tyhjä
+        if (nappulat.onkoRuuduVapaa(x, y)) {
+            System.out.println("Ruutu on vapaa");
 
-    /*
-     * GETTERTI JA SETTERIT
-     */
-//    public Lauta getLauta() {
-//        return this.lauta;
-//    }
+            //Jos ruutu on vapaa, niin onko se nappulan boolean "syö tähän" ruuduissa valittuna Sotilaalla
+            System.out.println("Syökö Nappula tähän sijaintiin vai liikkuuko se testi: liikkuu");
+            if (!nappulat.syokoValittuNappulaSijaintiin(x, y) || (nappulat.annaValittuNappula().getTyyppi() != EnumTyyppi.SOTILAS && nappulat.syokoValittuNappulaSijaintiin(x, y))) {
+                nappulat.annaValittuNappula().liiku(x, y);
+            } else {
+                System.out.println("Voit liikkua vain syödessä tähän suuntaan");
+            }
 
-//    public NappulaSet getNappulatSet() {
-//        return this.nappulat;
-//    }
+        } else {
+            //Siirrytäänkö syömään
+            System.out.println("Syödään nappulaa..");
+            if (nappulat.syokoValittuNappulaSijaintiin(x, y) && nappulat.annaValittuNappula().getVari() != nappulat.getNappula(x, y).getVari()) {
+                System.out.println("Valittu Nappula syö sijaintiin. Poistetaan nappulaa: " + nappulat.getNappula(x, y));
+
+                nappulat.poistaNappula(nappulat.getNappula(x, y));
+                System.out.println("Nappula poistettu");
+
+                nappulat.annaValittuNappula().liiku(x, y);
+                System.out.println("Liikutetaan valittu nappula sijaintiin..");
+            } else {
+                System.out.println("Voit syödä vain vastustajan nappuloita.");
+            }
+        }
+    }
 }

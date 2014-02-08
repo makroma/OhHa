@@ -4,13 +4,11 @@
  * and open the template in the editor.
  */
 
-        /* 
-         Valkoiset "\u2654", "\u2655", "\u2656", "\u2657", "\u2658", "\u2659"
-         Mustat "\u265A", "\u265B", "\u265C", "\u265D", "\u265E", "\u265F"
-         Ruudut Color.white Color.gray
-         */
-
-
+/* 
+ Valkoiset "\u2654", "\u2655", "\u2656", "\u2657", "\u2658", "\u2659"
+ Mustat "\u265A", "\u265B", "\u265C", "\u265D", "\u265E", "\u265F"
+ Ruudut Color.white Color.gray
+ */
 package shakkilabra.GameEngine;
 
 import shakkilabra.Assets.Kordinaatti;
@@ -63,7 +61,7 @@ public class NappulaSet {
 
     //Onko Tämä vielä kesken?? Pelimoottorin tarkistus käyttää tätä
     public boolean onkoRuutuValitunNappulanSiirroissa(int x, int y) {
-        for (Kordinaatti k : annaValittuNappula().getMahdollisetSiirrot().keySet()) {
+        for (Kordinaatti k : annaValittuNappula().getMahdollisetSiirrot()) {
             if (k.getX() == x && k.getY() == y) {
                 return true;
             }
@@ -72,16 +70,19 @@ public class NappulaSet {
     }
 
     //Korjaa tättätä!
+//    public boolean syokoValittuNappulaSijaintiin(int x, int y) {
+//        for (Kordinaatti k : annaValittuNappula().getMahdollisetSiirrot().keySet()) {
+//            if (!onkoRuuduVapaa(k.getX(), k.getY())) {
+//                System.out.println("sijainnista löytyi nappula");
+//                if (annaValittuNappula().getMahdollisetSiirrot().get(k)) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
     public boolean syokoValittuNappulaSijaintiin(int x, int y) {
-        for (Kordinaatti k : annaValittuNappula().getMahdollisetSiirrot().keySet()) {
-            if (!onkoRuuduVapaa(k.getX(), k.getY())) {
-                System.out.println("sijainnista löytyi nappula");
-                if (annaValittuNappula().getMahdollisetSiirrot().get(k)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return annaValittuNappula().syokoSotilas(x, y);
     }
 
     public Nappula annaValittuNappula() {
@@ -107,7 +108,7 @@ public class NappulaSet {
 
     public void tulostaMahdollisetSiirrotXY(int x, int y) {
         System.out.println("Mahdolliset siirrot nappulalle " + getNappula(x, y));
-        for (Kordinaatti k : getNappula(x, y).getMahdollisetSiirrot().keySet()) {
+        for (Kordinaatti k : getNappula(x, y).getMahdollisetSiirrot()) {
             System.out.print(k.getX() + "," + k.getY() + ", ");
         }
         System.out.println("");
@@ -116,7 +117,7 @@ public class NappulaSet {
 
     public void tulostaValitunNappulanMahdollisetSiirrot() {
         System.out.println("Mahdolliset siirrot nappulalle " + annaValittuNappula());
-        for (Kordinaatti k : annaValittuNappula().getMahdollisetSiirrot().keySet()) {
+        for (Kordinaatti k : annaValittuNappula().getMahdollisetSiirrot()) {
             System.out.print(k.getX() + "," + k.getY() + ", ");
         }
         System.out.println("");

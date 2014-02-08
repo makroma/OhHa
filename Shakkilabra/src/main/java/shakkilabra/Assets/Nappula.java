@@ -1,5 +1,7 @@
 package shakkilabra.Assets;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,7 +13,7 @@ public abstract class Nappula {
     private int siirtojenMaara;
     private boolean elossa;
     private boolean valittu;
-    private HashMap<Kordinaatti, Boolean> mahdollisetSiirrot;
+    private ArrayList<Kordinaatti> mahdollisetSiirrot;
 
     public Nappula(EnumTyyppi nappulat, EnumVari vari, Kordinaatti kord) {
         this.tyyppi = nappulat;
@@ -19,7 +21,8 @@ public abstract class Nappula {
         this.kordinaatti = kord;
         this.siirtojenMaara = 0;
         this.elossa = true;
-        this.mahdollisetSiirrot = mahdollisetSiirrot();
+        this.valittu = false;
+        //this.mahdollisetSiirrot = mahdollisetSiirrot;
     }
     /*
      *  Abstraktit luokat
@@ -29,13 +32,15 @@ public abstract class Nappula {
 
     public abstract String uCodeNappula();
 
-    public abstract HashMap<Kordinaatti, Boolean> mahdollisetSiirrot();
+    public abstract ArrayList<Kordinaatti> mahdollisetSiirrot();
+    
+    public abstract boolean syokoSotilas(int x, int y);
 
     /*getMahdollisetSiirrot palauttaa boolean true, jos voi 
      *syödä kyseisessä kordinaatissa
      *esim sotilas ei syö eteenpäin liikkuessa
      */
-    public HashMap<Kordinaatti, Boolean> getMahdollisetSiirrot() {
+    public ArrayList<Kordinaatti> getMahdollisetSiirrot() {
         return mahdollisetSiirrot();
     }
 
@@ -45,15 +50,15 @@ public abstract class Nappula {
 
     public boolean onkoMahdollinenSiirto(Kordinaatti kord) {
         System.out.println("Tarkistetaan siirron mahdollisuus...");
-        if(getMahdollisetSiirrot().containsKey(kord)){
+        if(getMahdollisetSiirrot().contains(kord)){
             return true;
         }
         
-        for (Kordinaatti k : getMahdollisetSiirrot().keySet()) {
-            if(k.getX()==kord.getX()&&k.getY()==kord.getY()){
-                return true;
-            }
-        }
+//        for (Kordinaatti k : getMahdollisetSiirrot().keySet()) {
+//            if(k.getX()==kord.getX()&&k.getY()==kord.getY()){
+//                return true;
+//            }
+//        }
         System.out.println("False");
         return false;
     }

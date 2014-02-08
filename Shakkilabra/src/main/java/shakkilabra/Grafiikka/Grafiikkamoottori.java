@@ -47,22 +47,10 @@ public final class Grafiikkamoottori {
 
     public void luoPeli() {
         this.pelimoottori.luoSotilaatLaudalle(this.nappulatSet);
-//        this.pelimoottori.luoSotilaatLaudalle(this.nappulatSet);
-//        this.frame = new JFrame("TopLevelDemo");
-//        this.frame.setPreferredSize(new Dimension(900, 800));
-//        this.gui = new JPanel(new GridLayout(9, 10, 4, 4));
-//        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        //this.nappulatSet = this.pelimoottori.getNappulatSet(); 
+
     }
 
     public void run() {
-//        JFrame frame = new JFrame("TopLevelDemo");
-//        frame.setPreferredSize(new Dimension(900, 800));
-//        // JPanel p = new JPanel(new BorderLayout());
-//        JPanel gui = new JPanel(new GridLayout(9, 10, 4, 4));
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        
-
         this.frame = new JFrame("TopLevelDemo");
         this.frame.setPreferredSize(new Dimension(900, 800));
         this.gui = new JPanel(new GridLayout(9, 10, 4, 4));
@@ -73,8 +61,6 @@ public final class Grafiikkamoottori {
         frame.setVisible(true);
 
         JOptionPane.getDesktopPaneForComponent(gui);
-
-        // JOptionPane.showMessageDialog(null, gui);
     }
 
     public void paivita() {
@@ -84,7 +70,6 @@ public final class Grafiikkamoottori {
     }
 
     private void piirraGraafinenRuudukko(JPanel gui) {
-        // tulostaVaakaKordinaatti(gui);
 
         for (int i = 0; i < 8; i++) {
             tulostaPystyKordinaatti(i, gui);

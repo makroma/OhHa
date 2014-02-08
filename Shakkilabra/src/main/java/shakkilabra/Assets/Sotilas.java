@@ -6,8 +6,6 @@
 package shakkilabra.Assets;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  *
@@ -43,37 +41,55 @@ public class Sotilas extends Nappula {
     }
 
     @Override
-    public HashMap<Kordinaatti, Boolean> mahdollisetSiirrot() {
-        HashMap<Kordinaatti, Boolean> siirrot = new HashMap<>();
+    public ArrayList<Kordinaatti> mahdollisetSiirrot() {
+        ArrayList<Kordinaatti> siirrot = new ArrayList<>();
 
         //Jos siirtojenmäärä = 0 niin sotilasta voi siirtää yhden tai kaksi eteenpäin
         if (super.getSiirtojenMaara() == 0) {
             if (super.getVari() == EnumVari.MUSTA) {
-                siirrot.put(new Kordinaatti(super.getKordinaatti().getX() + 1, super.getKordinaatti().getY()), Boolean.FALSE);
-                siirrot.put(new Kordinaatti(super.getKordinaatti().getX() + 2, super.getKordinaatti().getY()), Boolean.FALSE);
+                siirrot.add(new Kordinaatti(super.getKordinaatti().getX() + 1, super.getKordinaatti().getY()));
+                siirrot.add(new Kordinaatti(super.getKordinaatti().getX() + 2, super.getKordinaatti().getY()));
             } else if (super.getVari() == EnumVari.VALKOINEN) {
-                siirrot.put(new Kordinaatti(super.getKordinaatti().getX() - 1, super.getKordinaatti().getY()), Boolean.FALSE);
-                siirrot.put(new Kordinaatti(super.getKordinaatti().getX() - 2, super.getKordinaatti().getY()), Boolean.FALSE);
+                siirrot.add(new Kordinaatti(super.getKordinaatti().getX() - 1, super.getKordinaatti().getY()));
+                siirrot.add(new Kordinaatti(super.getKordinaatti().getX() - 2, super.getKordinaatti().getY()));
             }
         }
         // Voi liikkua eteenpäin, (jos edessä ei ole toista nappulaa, mutta sitä ei tässä testata)
         if (super.getSiirtojenMaara() >= 1) {
             if (super.getVari() == EnumVari.MUSTA) {
-                siirrot.put(new Kordinaatti(super.getKordinaatti().getX() + 1, super.getKordinaatti().getY()), Boolean.FALSE);
+                siirrot.add(new Kordinaatti(super.getKordinaatti().getX() + 1, super.getKordinaatti().getY()));
             } else if (super.getVari() == EnumVari.VALKOINEN) {
-                siirrot.put(new Kordinaatti(super.getKordinaatti().getX() - 1, super.getKordinaatti().getY()), Boolean.FALSE);
+                siirrot.add(new Kordinaatti(super.getKordinaatti().getX() - 1, super.getKordinaatti().getY()));
             }
         }
         //voi syödä viistoihin, eli palauttaa true
-        
-         if (super.getVari() == EnumVari.MUSTA) {
-         siirrot.put(new Kordinaatti(super.getKordinaatti().getX() + 1, super.getKordinaatti().getY() + 1), Boolean.TRUE);
-         siirrot.put(new Kordinaatti(super.getKordinaatti().getX() + 1, super.getKordinaatti().getY() - 1), Boolean.TRUE);
-         } else if (super.getVari() == EnumVari.VALKOINEN) {
-         siirrot.put(new Kordinaatti(super.getKordinaatti().getX() - 1, super.getKordinaatti().getY() + 1), Boolean.TRUE);
-         siirrot.put(new Kordinaatti(super.getKordinaatti().getX() - 1, super.getKordinaatti().getY() - 1), Boolean.TRUE);
-         }
+
+        if (super.getVari() == EnumVari.MUSTA) {
+            siirrot.add(new Kordinaatti(super.getKordinaatti().getX() + 1, super.getKordinaatti().getY() + 1));
+            siirrot.add(new Kordinaatti(super.getKordinaatti().getX() + 1, super.getKordinaatti().getY() - 1));
+        } else if (super.getVari() == EnumVari.VALKOINEN) {
+            siirrot.add(new Kordinaatti(super.getKordinaatti().getX() - 1, super.getKordinaatti().getY() + 1));
+            siirrot.add(new Kordinaatti(super.getKordinaatti().getX() - 1, super.getKordinaatti().getY() - 1));
+        }
 
         return siirrot;
+    }
+
+    @Override
+    public boolean syokoSotilas(int x, int y) {
+        if (super.getVari() == EnumVari.MUSTA) {
+            if (super.getKordinaatti().getX() + 1 == x && super.getKordinaatti().getY() + 1 == y) {
+                return true;
+            } else if (super.getKordinaatti().getX() + 1 == x && super.getKordinaatti().getY() - 1 == y) {
+                return true;
+            }
+        } else if (super.getVari() == EnumVari.VALKOINEN) {
+            if (super.getKordinaatti().getX() - 1 == x && super.getKordinaatti().getY() + 1 == y) {
+                return true;
+            } else if (super.getKordinaatti().getX() - 1 == x && super.getKordinaatti().getY() - 1 == y) {
+                return true;
+            }
+        }
+        return false;
     }
 }
