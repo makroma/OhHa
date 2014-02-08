@@ -34,7 +34,7 @@ public abstract class Nappula {
 
     public abstract ArrayList<Kordinaatti> mahdollisetSiirrot();
     
-    public abstract boolean syokoSotilas(int x, int y);
+    public abstract boolean syokoNappula(int x, int y);
 
     /*getMahdollisetSiirrot palauttaa boolean true, jos voi 
      *syödä kyseisessä kordinaatissa

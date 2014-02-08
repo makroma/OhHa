@@ -9,9 +9,8 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JLabel;
-import shakkilabra.Assets.Kordinaatti;
 import shakkilabra.GameEngine.NappulaSet;
-import shakkilabra.GameEngine.Pelimoottori;
+import shakkilabra.GameEngine.Pelilogiikka;
 
 /**
  *
@@ -19,7 +18,7 @@ import shakkilabra.GameEngine.Pelimoottori;
  */
 public class HiirenKuuntelija implements MouseListener {
 
-    private Pelimoottori pelimoottori;
+    private Pelilogiikka pelimoottori;
     private NappulaSet nappulat;
     private JLabel jlabel;
     private int x;
@@ -27,7 +26,7 @@ public class HiirenKuuntelija implements MouseListener {
     private Color color;
     private Grafiikkamoottori grafiikkamoottori;
 
-    public HiirenKuuntelija(Grafiikkamoottori g, JLabel j, Pelimoottori p, NappulaSet n, int x, int y) {
+    public HiirenKuuntelija(Grafiikkamoottori g, JLabel j, Pelilogiikka p, NappulaSet n, int x, int y) {
         this.jlabel = j;
         this.pelimoottori = p;
         this.nappulat = n;
@@ -72,7 +71,7 @@ public class HiirenKuuntelija implements MouseListener {
 
             this.nappulat.tulostaValitunNappulanMahdollisetSiirrot();
             System.out.println("Liikutetaan nappulaa " + this.nappulat.annaValittuNappula() + " sijaintiin " + x + ", " + y);
-            this.pelimoottori.liikutaNappulaa(this.nappulat, x, y);
+            this.pelimoottori.nappulanLiikkumisToiminto(this.nappulat, x, y);
             //this.nappulat.annaValittuNappula().liiku(x, y);
             //this.nappulat.annaValittuNappula().setValittu(false);
             grafiikkamoottori.run();

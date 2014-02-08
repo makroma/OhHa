@@ -7,7 +7,7 @@ package shakkilabra.Grafiikka;
 
 import shakkilabra.Assets.EnumVari;
 import shakkilabra.GameEngine.NappulaSet;
-import shakkilabra.GameEngine.Pelimoottori;
+import shakkilabra.GameEngine.Pelilogiikka;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -26,14 +26,14 @@ import javax.swing.SwingConstants;
 public final class Grafiikkamoottori {
 
     static Font font = new Font("Sans-Serif", Font.PLAIN, 64);
-    private Pelimoottori pelimoottori;
+    private Pelilogiikka pelilogiikka;
     private Lauta lauta;
     private NappulaSet nappulatSet;
     private JFrame frame;
     private JPanel gui;
 
     public Grafiikkamoottori() {
-        this.pelimoottori = new Pelimoottori();
+        this.pelilogiikka = new Pelilogiikka();
         this.nappulatSet = new NappulaSet();
         this.lauta = new Lauta();
 
@@ -41,13 +41,10 @@ public final class Grafiikkamoottori {
         this.frame.setPreferredSize(new Dimension(900, 800));
         this.gui = new JPanel(new GridLayout(9, 10, 4, 4));
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //Lauta lauta, NappulaSet nappulat
-
     }
 
     public void luoPeli() {
-        this.pelimoottori.luoSotilaatLaudalle(this.nappulatSet);
-
+        this.pelilogiikka.luoSotilaatLaudalle(this.nappulatSet);
     }
 
     public void run() {
@@ -68,29 +65,39 @@ public final class Grafiikkamoottori {
         piirraGraafinenRuudukko(this.gui);
 
     }
-
+    /*
+     * Ruudukon luonti toimnnot
+     */
     private void piirraGraafinenRuudukko(JPanel gui) {
 
         for (int i = 0; i < 8; i++) {
             tulostaPystyKordinaatti(i, gui);
             for (int j = 0; j < 8; j++) {
                 if (this.lauta.getRuutu(i, j).getVari() == EnumVari.VALKOINEN) {
-                    if (this.nappulatSet.getNappula(i, j) != null) {
-                        piirraRuutu(this.nappulatSet.getNappula(i, j).uCodeNappula(), gui, Color.white, i, j);
-                    } else {
-                        piirraRuutu(" ", gui, Color.white, i, j);
-                    }
+                    luoValkoinenRuutu(i, j, gui);
                 } else if (this.lauta.getRuutu(i, j).getVari() == EnumVari.MUSTA) {
-                    if (this.nappulatSet.getNappula(i, j) != null) {
-                        piirraRuutu(this.nappulatSet.getNappula(i, j).uCodeNappula(), gui, Color.gray, i, j);
-                    } else {
-                        piirraRuutu(" ", gui, Color.gray, i, j);
-                    }
+                    luoMustaRuutu(i, j, gui);
                 }
             }
             tulostaPystyKordinaatti(i, gui);
         }
         tulostaVaakaKordinaatti(gui);
+    }
+
+    private void luoMustaRuutu(int i, int j, JPanel gui) {
+        if (this.nappulatSet.getNappula(i, j) != null) {
+            piirraRuutu(this.nappulatSet.getNappula(i, j).uCodeNappula(), gui, Color.gray, i, j);
+        } else {
+            piirraRuutu(" ", gui, Color.gray, i, j);
+        }
+    }
+
+    private void luoValkoinenRuutu(int i, int j, JPanel gui) {
+        if (this.nappulatSet.getNappula(i, j) != null) {
+            piirraRuutu(this.nappulatSet.getNappula(i, j).uCodeNappula(), gui, Color.white, i, j);
+        } else {
+            piirraRuutu(" ", gui, Color.white, i, j);
+        }
     }
 
     public void piirraRuutu(String s, Container c, Color d, int x, int y) {
@@ -100,13 +107,16 @@ public final class Grafiikkamoottori {
         l.setFont(font);
         l.setOpaque(true);
         l.setBackground(d);
-        l.addMouseListener(new HiirenKuuntelija(this, l, this.pelimoottori, this.nappulatSet, x, y));
+        l.addMouseListener(new HiirenKuuntelija(this, l, this.pelilogiikka, this.nappulatSet, x, y));
         c.add(l);
     }
 
+    /*
+     * Kordinaatiston luonti
+     *
+     */
     public void tulostaPystyKordinaatti(int i, JPanel gui) {
         piirraRuutu(Integer.toString(8 - i), gui, null, 10, 10);
-
     }
 
     public void tulostaVaakaKordinaatti(JPanel gui) {
@@ -116,8 +126,12 @@ public final class Grafiikkamoottori {
         }
     }
 
-    public Pelimoottori getPelimoottori() {
-        return pelimoottori;
+    /*
+     * GETTERIT
+     *
+     */
+    public Pelilogiikka getPelimoottori() {
+        return pelilogiikka;
     }
 
     public Lauta getLauta() {

@@ -5,6 +5,7 @@
  */
 package shakkilabra.Assets;
 
+import shakkilabra.Assets.Nappulat.Sotilas;
 import java.util.HashMap;
 import org.junit.After;
 import org.junit.AfterClass;

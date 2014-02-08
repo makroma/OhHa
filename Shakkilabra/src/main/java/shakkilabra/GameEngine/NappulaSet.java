@@ -59,7 +59,6 @@ public class NappulaSet {
         return this.nappulat.size();
     }
 
-    //Onko Tämä vielä kesken?? Pelimoottorin tarkistus käyttää tätä
     public boolean onkoRuutuValitunNappulanSiirroissa(int x, int y) {
         for (Kordinaatti k : annaValittuNappula().getMahdollisetSiirrot()) {
             if (k.getX() == x && k.getY() == y) {
@@ -69,20 +68,8 @@ public class NappulaSet {
         return false;
     }
 
-    //Korjaa tättätä!
-//    public boolean syokoValittuNappulaSijaintiin(int x, int y) {
-//        for (Kordinaatti k : annaValittuNappula().getMahdollisetSiirrot().keySet()) {
-//            if (!onkoRuuduVapaa(k.getX(), k.getY())) {
-//                System.out.println("sijainnista löytyi nappula");
-//                if (annaValittuNappula().getMahdollisetSiirrot().get(k)) {
-//                    return true;
-//                }
-//            }
-//        }
-//        return false;
-//    }
     public boolean syokoValittuNappulaSijaintiin(int x, int y) {
-        return annaValittuNappula().syokoSotilas(x, y);
+        return annaValittuNappula().syokoNappula(x, y);
     }
 
     public Nappula annaValittuNappula() {
@@ -93,10 +80,20 @@ public class NappulaSet {
         }
         return null;
     }
+    public boolean onkoLinjallaMuitaNappuloita(Nappula n, int x, int y){
+        
+        
+        
+        
+        return false;
+    }
+    
+    
 
     /*
      * DEBUG // asciipelimoottori
      */
+    
     public void tulostaNappulat() {
         for (Nappula n : this.nappulat) {
             if (n.isElossa()) {

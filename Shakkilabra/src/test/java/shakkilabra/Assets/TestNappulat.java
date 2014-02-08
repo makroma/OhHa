@@ -5,6 +5,7 @@
  */
 package shakkilabra.Assets;
 
+import shakkilabra.Assets.Nappulat.Sotilas;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
