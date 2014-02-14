@@ -8,4 +8,9 @@ Tuntikirjanpito
 06.2. 3 tuntia, vähän ohjelmointia ja sekvenssikaavion teko
 07.2. 2 tuntia ohjelmointia
 08.2. 7 tuntia ohjelmointia
+09.2. 5 tuntia ohjelmointia
+11.2. 2 tuntia Shakkimoottoreiden tutkimista ja implementoinnin miettimistä
+13.2. 2 tuntia JavaDoc luonti 
+14.2. 2 tuntia Koodikatselmointi
+
 
