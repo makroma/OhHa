@@ -5,7 +5,12 @@
  */
 package shakkilabra.Grafiikka;
 
+import java.awt.Color;
+import java.awt.Container;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 import shakkilabra.Assets.EnumVari;
+import static shakkilabra.Grafiikka.Grafiikkamoottori.font;
 
 public final class Lauta {
 
@@ -36,6 +41,8 @@ public final class Lauta {
         }
         System.out.println("Ruudukko luotu.");
     }
+    
+   
 
     public Ruutu[][] getRuudukko() {
         return ruutu;

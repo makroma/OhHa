@@ -68,6 +68,7 @@ public final class Grafiikkamoottori {
     /*
      * Ruudukon luonti toimnnot
      */
+
     private void piirraGraafinenRuudukko(JPanel gui) {
 
         for (int i = 0; i < 8; i++) {
@@ -103,6 +104,7 @@ public final class Grafiikkamoottori {
     public void piirraRuutu(String s, Container c, Color d, int x, int y) {
 
         JLabel l = new JLabel(s);
+        l.setText(s);
         l.setHorizontalAlignment(SwingConstants.CENTER);
         l.setFont(font);
         l.setOpaque(true);
