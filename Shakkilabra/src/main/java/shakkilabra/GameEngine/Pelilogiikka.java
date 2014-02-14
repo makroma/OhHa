@@ -15,6 +15,9 @@ import shakkilabra.Assets.Nappulat.Torni;
 import shakkilabra.Assets.Nappulat.Sotilas;
 
 /**
+ * Shakin pelilogiikka, joka vastaa nappuloiden luonnista ja liikuttelusta. L
+ * Liikuttamisen yhteydessä simuloidaan nappulan siirtoa, ja tarkistetaan
+ * mahdolliset esteet.
  *
  * @author marko
  */
@@ -24,6 +27,11 @@ public class Pelilogiikka {
 
     }
 
+    /**
+     * Luo nappulat aloitussijainteihin.
+     *
+     * @param nappulat NappulatSet, joka sisältää listan kaikista nappuloista
+     */
     public void luoSotilaatLaudalle(NappulaSet nappulat) {
         System.out.println("Luodaan nappulat...");
 
@@ -74,20 +82,28 @@ public class Pelilogiikka {
         nappulat.lisaaNappula(new Sotilas(EnumVari.MUSTA, 1, 7));
 
     }
-    /*
-     *  PELILOGIIKKA!
+
+    /**
+     * PELILOGIIKKA!
      *
-     *  LIIKKUMINEN
-     *   1. Onko mahdollinen siirto
-     *   2. Liikkuuko nappula tyhjään ruutuun vai syökö
-     *   3. Nappula kohtaiset liikkumismedodit tai syömistapahtuma
+     * LIIKKUMINEN 1. Onko mahdollinen siirto 2. Liikkuuko nappula tyhjään
+     * ruutuun vai syökö 3. Nappula kohtaiset liikkumismedodit tai
+     * syömistapahtuma
      *
      */
-    
-    public void valkoisenPelaajanVuoro(){
-        
+    public void valkoisenPelaajanVuoro() {
+
     }
 
+    /**
+     * NappulanLiikkumisToiminnon alussa tarkistettaaan, onko tehtävä siito
+     * nappulan mahdolliset siirrot listalla jos on, siirrytään testiin
+     * "liikkuuko tyhjään vai syö"
+     *
+     * @param nappulat NappulatLista
+     * @param x uusi X
+     * @param y uusi Y
+     */
     public void nappulanLiikkumisToiminto(NappulaSet nappulat, int x, int y) {
 
         if (onkoMahdollinenSiirto(nappulat, x, y)) {
@@ -97,6 +113,13 @@ public class Pelilogiikka {
         nappulat.annaValittuNappula().setValittu(false);
     }
 
+    /**
+     *
+     * @param nappulat NappulatLista
+     * @param x uusi X
+     * @param y uusi Y
+     * @return palauttaa true, jos siirto mahdollinen
+     */
     private boolean onkoMahdollinenSiirto(NappulaSet nappulat, int x, int y) {
 
         System.out.println("Tyyppi: " + nappulat.annaValittuNappula());
@@ -111,6 +134,14 @@ public class Pelilogiikka {
 
     }
 
+    /**
+     * Liikkuuko vai syökö -testi. Jos liikkuu, niin siirrytään
+     * liikkumismetodeihin muuten siirrytään syömistoimintaan
+     *
+     * @param nappulat NappulatLista
+     * @param x uusi X
+     * @param y uusi Y
+     */
     private void liikkuukoTyhjaanRuutuunVaiSyo(NappulaSet nappulat, int x, int y) {
         //Onko Ruutu tyhjä
         if (nappulat.onkoRuuduVapaa(x, y)) {
@@ -152,11 +183,17 @@ public class Pelilogiikka {
         }
     }
 
-    /*
+    /**
      * NAPPULAKOHTAISET LIIKKUMISMETODIT
      *
      * - Kuningas ja hevonen ei tarvitse erillisiä tarkistuksia esteistä
      *
+     * Tässä tarkistetaan kuningattaren nykyinen sijainti ja verrataan sitä
+     * uuteen sijaintiin. Suunnan mukaan siirrytään liikkeen simulointiin.
+     *
+     * @param nappulat NappulatLista
+     * @param x uusi X
+     * @param y uusi Y
      */
     private void liikutaKuningatarta(NappulaSet nappulat, int x, int y) {
         //Suoritetaan "onko matkanvarreella muista nappuluita" -testi
@@ -192,6 +229,13 @@ public class Pelilogiikka {
 
     }
 
+    /**
+     * Tornin liikukkumissuunnan tarkistus
+     *
+     * @param nappulat NappulatLista
+     * @param x uusi X
+     * @param y uusi Y
+     */
     private void liikutaTornia(NappulaSet nappulat, int x, int y) {
         //Suoritetaan "onko matkanvarreella muista nappuluita" -testi
         int nappulanX = nappulat.annaValittuNappula().getKordinaatti().getX();
@@ -208,6 +252,13 @@ public class Pelilogiikka {
         }
     }
 
+    /**
+     * Lähetin liikkumissuunnan tarkistus
+     *
+     * @param nappulat NappulatLista
+     * @param x uusi X
+     * @param y uusi Y
+     */
     private void liikutaLahettia(NappulaSet nappulat, int x, int y) {
         //Suoritetaan "onko matkanvarreella muista nappuluita" -testi
         int nappulanX = nappulat.annaValittuNappula().getKordinaatti().getX();
@@ -232,6 +283,13 @@ public class Pelilogiikka {
         }
     }
 
+    /**
+     * Sotilaan liikkumissuunnan tarkistus
+     *
+     * @param nappulat NappulatLista
+     * @param x uusi X
+     * @param y uusi Y
+     */
     private void liikutaSotilasta(NappulaSet nappulat, int x, int y) {
         if (!nappulat.syokoValittuNappulaSijaintiin(x, y)) {
             nappulat.annaValittuNappula().liiku(x, y);
@@ -240,9 +298,16 @@ public class Pelilogiikka {
         }
     }
 
-    /*
-     * ESTEIDEN TARKISTUSMETODIT
+    /**
+     * ESTEIDEN TARKISTUSMETODIT Tarkistaa esteet jos Y on suurempi ja X on
+     * pienempi
      *
+     * @param nappulanX nappulan nykyinen X
+     * @param nappulanY nappulan nykyinen Y
+     * @param y Nappulan uusi X
+     * @param x Nappulan uusi y
+     * @param nappulat NappulatLista
+     * @return True, jos ei esteitä
      */
     private boolean tarkistaEsteetkunYonSuurempiJaXonPienempi(int nappulanX, int nappulanY, int y, int x, NappulaSet nappulat) {
         nappulanX--;
@@ -258,6 +323,17 @@ public class Pelilogiikka {
         return true;
     }
 
+    /**
+     * ESTEIDEN TARKISTUSMETODIT Tarkistaa esteet jos X on suurempi ja Y on
+     * pienempi
+     *
+     * @param nappulanX nappulan nykyinen X
+     * @param nappulanY nappulan nykyinen Y
+     * @param y Nappulan uusi X
+     * @param x Nappulan uusi y
+     * @param nappulat NappulatLista
+     * @return True, jos ei esteitä
+     */
     private boolean tarkistaEsteetkunXonSuurempiJaYonPienempi(int nappulanX, int nappulanY, int y, int x, NappulaSet nappulat) {
         nappulanX++;
         nappulanY--;
@@ -272,6 +348,17 @@ public class Pelilogiikka {
         return true;
     }
 
+    /**
+     * ESTEIDEN TARKISTUSMETODIT Tarkistaa esteet kun X ja Y on suurempi kuin
+     * nykyinen sijainti
+     *
+     * @param nappulanX nappulan nykyinen X
+     * @param nappulanY nappulan nykyinen Y
+     * @param y Nappulan uusi X
+     * @param x Nappulan uusi y
+     * @param nappulat NappulatLista
+     * @return True, jos ei esteitä
+     */
     private boolean tarkistaEsteetkunXYonSuurempikuinSijainti(int nappulanX, int nappulanY, int y, int x, NappulaSet nappulat) {
         nappulanY++;
         nappulanX++;
@@ -286,6 +373,17 @@ public class Pelilogiikka {
         return true;
     }
 
+    /**
+     * ESTEIDEN TARKISTUSMETODIT Tarkistaa esteet X ja Y on pienempi kuin
+     * nykyinen sijainti
+     *
+     * @param nappulanX nappulan nykyinen X
+     * @param nappulanY nappulan nykyinen Y
+     * @param y Nappulan uusi X
+     * @param x Nappulan uusi y
+     * @param nappulat NappulatLista
+     * @return True, jos ei esteitä
+     */
     private boolean tarkistaEsteetkunXYonPienempiKuinSijainti(int nappulanX, int nappulanY, int y, int x, NappulaSet nappulat) {
         nappulanY--;
         nappulanX--;
@@ -300,6 +398,16 @@ public class Pelilogiikka {
         return true;
     }
 
+    /**
+     * ESTEIDEN TARKISTUSMETODIT Tarkistaa esteet X aakselilla
+     *
+     * @param nappulanX nappulan nykyinen X
+     * @param nappulanY nappulan nykyinen Y
+     * @param y Nappulan uusi X
+     * @param x Nappulan uusi y
+     * @param nappulat NappulatLista
+     * @return True, jos ei esteitä
+     */
     private boolean tarkistaEsteetXakselilla(int nappulanX, int x, NappulaSet nappulat, int nappulanY) {
         if (nappulanX < x) {
             nappulanX++;
@@ -324,6 +432,16 @@ public class Pelilogiikka {
         return true;
     }
 
+    /**
+     * ESTEIDEN TARKISTUSMETODIT Tarkistaa esteet Y akselilla
+     *
+     * @param nappulanX nappulan nykyinen X
+     * @param nappulanY nappulan nykyinen Y
+     * @param y Nappulan uusi X
+     * @param x Nappulan uusi y
+     * @param nappulat NappulatLista
+     * @return True, jos ei esteitä
+     */
     private boolean tarkistaEsteetYakselilla(int nappulanY, int y, NappulaSet nappulat, int nappulanX) {
 
         if (nappulanY < y) {

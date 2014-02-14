@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Abstrakti Nappulat yläluokka
+ *
+ * @author marko
+ */
 public abstract class Nappula {
 
     private EnumTyyppi tyyppi;
@@ -24,8 +29,12 @@ public abstract class Nappula {
         this.valittu = false;
         //this.mahdollisetSiirrot = mahdollisetSiirrot;
     }
-    /*
-     *  Abstraktit luokat
+
+    /**
+     * *Abstraktit luokat, jotka jokainen nappula toteuttaa
+     *
+     * @param x Xkordinaatti
+     * @param y YKordinaatti
      */
 
     public abstract void liiku(int x, int y);
@@ -33,32 +42,34 @@ public abstract class Nappula {
     public abstract String uCodeNappula();
 
     public abstract ArrayList<Kordinaatti> mahdollisetSiirrot();
-    
+
     public abstract boolean syokoNappula(int x, int y);
 
-    /*getMahdollisetSiirrot palauttaa boolean true, jos voi 
-     *syödä kyseisessä kordinaatissa
-     *esim sotilas ei syö eteenpäin liikkuessa
+    /**
+     * Pitää sisällään jokaisen nappulan mahdolliset siirrot
+     *
+     * @return palauttaa ArrayListin jossa kordinaatteja
      */
     public ArrayList<Kordinaatti> getMahdollisetSiirrot() {
         return mahdollisetSiirrot();
     }
 
+    /**
+     * Kasvattaa tehtyjen siirtojen määrää
+     */
     public void kasvataSiirtojenMaaraaYhdella() {
         this.siirtojenMaara++;
     }
-
+/**
+ *  Tarkistaa, onko annattu kordinaatti nappulan mahdolliset siirrot - listalla
+ * @param kord tarkistettava kordinaatti
+ * @return palauttaa true, jos arvo on listalla
+ */
     public boolean onkoMahdollinenSiirto(Kordinaatti kord) {
         System.out.println("Tarkistetaan siirron mahdollisuus...");
-        if(getMahdollisetSiirrot().contains(kord)){
+        if (getMahdollisetSiirrot().contains(kord)) {
             return true;
         }
-        
-//        for (Kordinaatti k : getMahdollisetSiirrot().keySet()) {
-//            if(k.getX()==kord.getX()&&k.getY()==kord.getY()){
-//                return true;
-//            }
-//        }
         System.out.println("False");
         return false;
     }
@@ -114,5 +125,4 @@ public abstract class Nappula {
         this.valittu = valittu;
     }
 
-   
 }

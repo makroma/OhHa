@@ -6,7 +6,7 @@
 package shakkilabra.Assets;
 
 /**
- *
+ * EnumTyyppi käsittää eri nappuloiden eri tyypit
  * @author marko
  */
 public enum EnumTyyppi {

@@ -6,7 +6,7 @@
 package shakkilabra.Assets;
 
 /**
- *
+ * Jokaisella nappulalla oleva XY kordinaatti
  * @author marko
  */
 public class Kordinaatti {

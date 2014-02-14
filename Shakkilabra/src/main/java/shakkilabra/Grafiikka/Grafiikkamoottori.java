@@ -1,8 +1,3 @@
-    /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package shakkilabra.Grafiikka;
 
 import shakkilabra.Assets.EnumVari;
@@ -20,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 /**
+ * Grafiikkamoottori vastaa pelin grafiikasta
  *
  * @author marko
  */
@@ -37,18 +33,21 @@ public final class Grafiikkamoottori {
         this.nappulatSet = new NappulaSet();
         this.lauta = new Lauta();
 
-        this.frame = new JFrame("TopLevelDemo");
-        this.frame.setPreferredSize(new Dimension(900, 800));
-        this.gui = new JPanel(new GridLayout(9, 10, 4, 4));
-        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    /**
+     * luo tällä hetkellä vain sotilaat laudalle pelilogiikan metodilla
+     *
+     */
     public void luoPeli() {
         this.pelilogiikka.luoSotilaatLaudalle(this.nappulatSet);
     }
 
+    /**
+     * Käynnistää graafiset ominaisuudet
+     */
     public void run() {
-        this.frame = new JFrame("TopLevelDemo");
+        this.frame = new JFrame("TopLevelChessInterface");
         this.frame.setPreferredSize(new Dimension(900, 800));
         this.gui = new JPanel(new GridLayout(9, 10, 4, 4));
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,15 +59,20 @@ public final class Grafiikkamoottori {
         JOptionPane.getDesktopPaneForComponent(gui);
     }
 
+    /**
+     * Tämä metodi ei vielä käydössä. Tuleva laajennut tarvitsee tätä
+     */
     public void paivita() {
 
         piirraGraafinenRuudukko(this.gui);
 
     }
-    /*
-     * Ruudukon luonti toimnnot
-     */
 
+    /**
+     * Ruudukon luontitoimnnot
+     *
+     * @param gui parametrina JPanel
+     */
     private void piirraGraafinenRuudukko(JPanel gui) {
 
         for (int i = 0; i < 8; i++) {
@@ -85,6 +89,13 @@ public final class Grafiikkamoottori {
         tulostaVaakaKordinaatti(gui);
     }
 
+    /**
+     * jos ruutu on musta
+     *
+     * @param i X kordinaatti
+     * @param j Y kordinaatti
+     * @param gui JPanel
+     */
     private void luoMustaRuutu(int i, int j, JPanel gui) {
         if (this.nappulatSet.getNappula(i, j) != null) {
             piirraRuutu(this.nappulatSet.getNappula(i, j).uCodeNappula(), gui, Color.gray, i, j);
@@ -93,6 +104,13 @@ public final class Grafiikkamoottori {
         }
     }
 
+    /**
+     * jos ruutu on Valkoinen
+     *
+     * @param i X kordinaatti
+     * @param j Y kordinaatti
+     * @param gui JPanel
+     */
     private void luoValkoinenRuutu(int i, int j, JPanel gui) {
         if (this.nappulatSet.getNappula(i, j) != null) {
             piirraRuutu(this.nappulatSet.getNappula(i, j).uCodeNappula(), gui, Color.white, i, j);
@@ -100,6 +118,17 @@ public final class Grafiikkamoottori {
             piirraRuutu(" ", gui, Color.white, i, j);
         }
     }
+
+    /**
+     * Luo jokaiseen ruutuun uuden JLabelin, asettaa sille fonttina nappulan,
+     * keskittää sen, asettaa oikean fontin, luo taustan ja hiirenkuuntelijan
+     *
+     * @param s Nappula
+     * @param c JPanel container
+     * @param d Väri
+     * @param x X kordinaatti
+     * @param y Y kordinaatti
+     */
 
     public void piirraRuutu(String s, Container c, Color d, int x, int y) {
 
@@ -113,7 +142,7 @@ public final class Grafiikkamoottori {
         c.add(l);
     }
 
-    /*
+    /**
      * Kordinaatiston luonti
      *
      */
