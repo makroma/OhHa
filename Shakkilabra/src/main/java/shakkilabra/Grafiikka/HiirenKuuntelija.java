@@ -65,16 +65,13 @@ public class HiirenKuuntelija implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         if (this.nappulat.getNappula(x, y) != null && this.nappulat.annaValittuNappula() == null) {
             System.out.println("Nappula valittu " + nappulat.getNappula(x, y));
-            // this.nappulat.tulostaMahdollisetSiirrot(x, y);
             this.nappulat.getNappula(x, y).setValittu(true);
         } else if (this.nappulat.annaValittuNappula() != null) {
 
             this.nappulat.tulostaValitunNappulanMahdollisetSiirrot();
             System.out.println("Liikutetaan nappulaa " + this.nappulat.annaValittuNappula() + " sijaintiin " + x + ", " + y);
             this.pelimoottori.nappulanLiikkumisToiminto(this.nappulat, x, y);
-            //this.nappulat.annaValittuNappula().liiku(x, y);
-            //this.nappulat.annaValittuNappula().setValittu(false);
-            grafiikkamoottori.run();
+            this.grafiikkamoottori.run();
         }
     }
 }

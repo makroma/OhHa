@@ -12,5 +12,6 @@ Tuntikirjanpito
 11.2. 2 tuntia Shakkimoottoreiden tutkimista ja implementoinnin miettimistä
 13.2. 2 tuntia JavaDoc luonti 
 14.2. 2 tuntia Koodikatselmointi
+15.2. 1 tunti Menu
 
 

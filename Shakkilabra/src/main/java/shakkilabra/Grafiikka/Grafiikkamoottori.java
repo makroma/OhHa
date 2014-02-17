@@ -27,11 +27,13 @@ public final class Grafiikkamoottori {
     private NappulaSet nappulatSet;
     private JFrame frame;
     private JPanel gui;
+    private Menu menu;
 
     public Grafiikkamoottori() {
         this.pelilogiikka = new Pelilogiikka();
         this.nappulatSet = new NappulaSet();
         this.lauta = new Lauta();
+        this.menu = new Menu();
 
     }
 
@@ -41,6 +43,7 @@ public final class Grafiikkamoottori {
      */
     public void luoPeli() {
         this.pelilogiikka.luoSotilaatLaudalle(this.nappulatSet);
+
     }
 
     /**
@@ -49,6 +52,8 @@ public final class Grafiikkamoottori {
     public void run() {
         this.frame = new JFrame("TopLevelChessInterface");
         this.frame.setPreferredSize(new Dimension(900, 800));
+        //Luo ylävalikon
+        frame.setJMenuBar(menu.createMenuBar());
         this.gui = new JPanel(new GridLayout(9, 10, 4, 4));
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         piirraGraafinenRuudukko(gui);
@@ -145,6 +150,8 @@ public final class Grafiikkamoottori {
     /**
      * Kordinaatiston luonti
      *
+     * @param i
+     * @param gui
      */
     public void tulostaPystyKordinaatti(int i, JPanel gui) {
         piirraRuutu(Integer.toString(8 - i), gui, null, 10, 10);
