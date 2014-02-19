@@ -20,7 +20,7 @@ import javax.swing.SwingConstants;
  * @author marko
  */
 public final class Grafiikkamoottori {
-
+    
     static Font font = new Font("Sans-Serif", Font.PLAIN, 64);
     private Pelilogiikka pelilogiikka;
     private Lauta lauta;
@@ -28,13 +28,14 @@ public final class Grafiikkamoottori {
     private JFrame frame;
     private JPanel gui;
     private Menu menu;
-
+    private JLabel valittuRuutu;
+    
     public Grafiikkamoottori() {
         this.pelilogiikka = new Pelilogiikka();
         this.nappulatSet = new NappulaSet();
         this.lauta = new Lauta();
         this.menu = new Menu();
-
+        this.valittuRuutu = null;
     }
 
     /**
@@ -43,7 +44,7 @@ public final class Grafiikkamoottori {
      */
     public void luoPeli() {
         this.pelilogiikka.luoSotilaatLaudalle(this.nappulatSet);
-
+        
     }
 
     /**
@@ -54,23 +55,39 @@ public final class Grafiikkamoottori {
         this.frame.setPreferredSize(new Dimension(900, 800));
         //Luo ylävalikon
         frame.setJMenuBar(menu.createMenuBar());
+        
         this.gui = new JPanel(new GridLayout(9, 10, 4, 4));
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         piirraGraafinenRuudukko(gui);
         frame.getContentPane().add(gui);
         frame.pack();
         frame.setVisible(true);
-
+        
         JOptionPane.getDesktopPaneForComponent(gui);
     }
 
     /**
-     * Tämä metodi ei vielä käydössä. Tuleva laajennut tarvitsee tätä
+     * Muutettujen ruutujen päivitysMetodi Hiiren kuuntelija asettaa
+     * valittuRuutu = JLabel kun valitaan ruutu. Kun tehdään siirto kutsutaan
+     * paivitaMetodia, joka tyhjentää vanhan ruudun, asettaa valinnan null,
+     * asettaa uuten ruutuun nappulan. ja päivittää guin.
+     *
+     * @param l tuo hiirenlukijalta kyseisen JLabel elementin
+     * @param x hakee X Y kordinaateilla kyseisen ruuden nappulan
+     * @param y
      */
-    public void paivita() {
-
-        piirraGraafinenRuudukko(this.gui);
-
+    public void paivita(JLabel l, int x, int y) {
+        
+        this.valittuRuutu.setText(null);
+        this.valittuRuutu = null;
+        l.setForeground(Color.BLACK);
+        l.setText(this.nappulatSet.getNappula(x, y).uCodeNappula());
+        
+    }
+    
+    public void paivitaValintaVari() {
+        
+        this.valittuRuutu.setForeground(Color.darkGray);
     }
 
     /**
@@ -79,7 +96,7 @@ public final class Grafiikkamoottori {
      * @param gui parametrina JPanel
      */
     private void piirraGraafinenRuudukko(JPanel gui) {
-
+        
         for (int i = 0; i < 8; i++) {
             tulostaPystyKordinaatti(i, gui);
             for (int j = 0; j < 8; j++) {
@@ -134,9 +151,8 @@ public final class Grafiikkamoottori {
      * @param x X kordinaatti
      * @param y Y kordinaatti
      */
-
     public void piirraRuutu(String s, Container c, Color d, int x, int y) {
-
+        
         JLabel l = new JLabel(s);
         l.setText(s);
         l.setHorizontalAlignment(SwingConstants.CENTER);
@@ -156,7 +172,7 @@ public final class Grafiikkamoottori {
     public void tulostaPystyKordinaatti(int i, JPanel gui) {
         piirraRuutu(Integer.toString(8 - i), gui, null, 10, 10);
     }
-
+    
     public void tulostaVaakaKordinaatti(JPanel gui) {
         String kord = " ABCDEFGH  ";
         for (int i = 0; i < 9; i++) {
@@ -171,13 +187,21 @@ public final class Grafiikkamoottori {
     public Pelilogiikka getPelimoottori() {
         return pelilogiikka;
     }
-
+    
     public Lauta getLauta() {
         return lauta;
     }
-
+    
     public NappulaSet getNappulatSet() {
         return nappulatSet;
     }
-
+    
+    public void setValittuRuutu(JLabel valittuRuutu) {
+        this.valittuRuutu = valittuRuutu;
+    }
+    
+    public JLabel getValittuRuutu() {
+        return valittuRuutu;
+    }
+    
 }

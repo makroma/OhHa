@@ -23,7 +23,11 @@ import shakkilabra.Assets.Nappulat.Sotilas;
  */
 public class Pelilogiikka {
 
+    private boolean valkoisenVuoro;
+
     public Pelilogiikka() {
+
+        this.valkoisenVuoro = true;
 
     }
 
@@ -91,26 +95,58 @@ public class Pelilogiikka {
      * syömistapahtuma
      *
      */
-    public void valkoisenPelaajanVuoro() {
+    public boolean oikeanPelaajanVuoro(NappulaSet nappulat) {
 
+        if (nappulat.annaValittuNappula().getVari() == EnumVari.VALKOINEN && valkoisenVuoro) {
+            return true;
+        } else if (nappulat.annaValittuNappula().getVari() == EnumVari.MUSTA && !valkoisenVuoro) {
+            return true;
+        }
+        return false;
+    }
+
+    public void vaihdaPelaajanVuoro() {
+        this.valkoisenVuoro = !this.valkoisenVuoro;
     }
 
     /**
-     * NappulanLiikkumisToiminnon alussa tarkistettaaan, onko tehtävä siito
-     * nappulan mahdolliset siirrot listalla jos on, siirrytään testiin
-     * "liikkuuko tyhjään vai syö"
+     * NappulanLiikkumisToiminnon alussa tarkistettaaan, onko oikean pelaajan
+     * vuoro, onko tehtävä siito nappulan mahdolliset siirrot listalla jos on,
+     * siirrytään testiin "liikkuuko tyhjään vai syö", joka samalla hoitaa
+     * nappulan liikuttamisen. jos toiminnot onnistuu palautetaan true
      *
      * @param nappulat NappulatLista
      * @param x uusi X
      * @param y uusi Y
+     * @return jos toiminto onnistui, palautetaan true.
      */
-    public void nappulanLiikkumisToiminto(NappulaSet nappulat, int x, int y) {
+    public boolean nappulanLiikkumisToiminto(NappulaSet nappulat, int x, int y) {
 
-        if (onkoMahdollinenSiirto(nappulat, x, y)) {
-            //Siirrytään seuraavaan vaiheeseen
-            liikkuukoTyhjaanRuutuunVaiSyo(nappulat, x, y);
+        if (oikeanPelaajanVuoro(nappulat)) {
+            System.out.println("Oikean pelaajan vuoro. ");
+
+            if (onkoMahdollinenSiirto(nappulat, x, y)) {
+                //Siirrytään seuraavaan vaiheeseen
+
+                if (liikkuukoTyhjaanRuutuunVaiSyo(nappulat, x, y)) {
+
+                    nappulat.annaValittuNappula().setValittu(false);
+                    vaihdaPelaajanVuoro();
+                    return true;
+                }
+                System.out.println("Siirto ei onnistunut");
+                nappulat.annaValittuNappula().setValittu(false);
+                return false;
+
+            }
+            System.out.println("Siirto ei ole mahdollinen");
+            nappulat.annaValittuNappula().setValittu(false);
+            return false;
         }
+        System.out.println("Väärän pelaajan vuoro");
         nappulat.annaValittuNappula().setValittu(false);
+        return false;
+
     }
 
     /**
@@ -142,29 +178,14 @@ public class Pelilogiikka {
      * @param x uusi X
      * @param y uusi Y
      */
-    private void liikkuukoTyhjaanRuutuunVaiSyo(NappulaSet nappulat, int x, int y) {
+    private boolean liikkuukoTyhjaanRuutuunVaiSyo(NappulaSet nappulat, int x, int y) {
         //Onko Ruutu tyhjä
         if (nappulat.onkoRuuduVapaa(x, y)) {
             System.out.println("Ruutu on vapaa");
 
             System.out.println("Syökö Nappula tähän sijaintiin vai liikkuuko se testi:");
+            return nappulaTyypinTarkistusjaLiikkuminen(nappulat, x, y);
 
-            if (nappulat.annaValittuNappula().getTyyppi().equals(EnumTyyppi.SOTILAS)) {
-                //Jos Sotilas, niin...
-                liikutaSotilasta(nappulat, x, y);
-            } else if (nappulat.annaValittuNappula().getTyyppi().equals(EnumTyyppi.TORNI)) {
-                //Jos Torni...
-                liikutaTornia(nappulat, x, y);
-            } else if (nappulat.annaValittuNappula().getTyyppi().equals(EnumTyyppi.KUNINGATAR)) {
-                //Jos Kuningatar...
-                liikutaKuningatarta(nappulat, x, y);
-            } else if (nappulat.annaValittuNappula().getTyyppi().equals(EnumTyyppi.LAHETTI)) {
-                //Jos Lahetti...
-                liikutaLahettia(nappulat, x, y);
-            } else {
-                //jos Hevonen tai kuningas
-                nappulat.annaValittuNappula().liiku(x, y);
-            }
         } else {
             //Siirrytäänkö syömään
             System.out.println("Syödään nappulaa..");
@@ -174,12 +195,39 @@ public class Pelilogiikka {
                 System.out.println("Valittu Nappula syö sijaintiin. Poistetaan nappulaa: " + nappulat.getNappula(x, y));
                 nappulat.poistaNappula(nappulat.getNappula(x, y));
                 System.out.print("Nappula poistettu. ");
-
-                nappulat.annaValittuNappula().liiku(x, y);
                 System.out.println("Liikutetaan valittu nappula sijaintiin..");
+                if (nappulat.annaValittuNappula().getTyyppi() == EnumTyyppi.SOTILAS) {
+                    nappulat.annaValittuNappula().liiku(x, y);
+                    return true;
+                }
+
+                return nappulaTyypinTarkistusjaLiikkuminen(nappulat, x, y);
+
             } else {
                 System.out.println("Voit syödä vain vastustajan nappuloita.");
+                return false;
             }
+        }
+    }
+
+    private boolean nappulaTyypinTarkistusjaLiikkuminen(NappulaSet nappulat, int x, int y) {
+        if (nappulat.annaValittuNappula().getTyyppi().equals(EnumTyyppi.SOTILAS)) {
+            //Jos Sotilas, niin...
+            return liikutaSotilasta(nappulat, x, y);
+        } else if (nappulat.annaValittuNappula().getTyyppi().equals(EnumTyyppi.TORNI)) {
+            //Jos Torni...
+            return liikutaTornia(nappulat, x, y);
+        } else if (nappulat.annaValittuNappula().getTyyppi().equals(EnumTyyppi.KUNINGATAR)) {
+            //Jos Kuningatar...
+            return liikutaKuningatarta(nappulat, x, y);
+        } else if (nappulat.annaValittuNappula().getTyyppi().equals(EnumTyyppi.LAHETTI)) {
+            //Jos Lahetti...
+            return liikutaLahettia(nappulat, x, y);
+        } else {
+            //jos Hevonen tai kuningas
+            // tee Tarkistus myös Näille!!!! nyt heittää exceptionin
+            nappulat.annaValittuNappula().liiku(x, y);
+            return true;
         }
     }
 
@@ -195,7 +243,7 @@ public class Pelilogiikka {
      * @param x uusi X
      * @param y uusi Y
      */
-    private void liikutaKuningatarta(NappulaSet nappulat, int x, int y) {
+    private boolean liikutaKuningatarta(NappulaSet nappulat, int x, int y) {
         //Suoritetaan "onko matkanvarreella muista nappuluita" -testi
         int nappulanX = nappulat.annaValittuNappula().getKordinaatti().getX();
         int nappulanY = nappulat.annaValittuNappula().getKordinaatti().getY();
@@ -203,29 +251,36 @@ public class Pelilogiikka {
         if (nappulanX == x) {
             if (tarkistaEsteetYakselilla(nappulanY, y, nappulat, nappulanX)) {
                 nappulat.annaValittuNappula().liiku(x, y);
+                return true;
             }
         } else if (nappulanY == y) {
             if (tarkistaEsteetXakselilla(nappulanX, x, nappulat, nappulanY)) {
                 nappulat.annaValittuNappula().liiku(x, y);
+                return true;
             }
         } //Liikutaanko ViistoAkseleilla
         else if (nappulanX < x && nappulanY < y) {
             if (tarkistaEsteetkunXYonSuurempikuinSijainti(nappulanX, nappulanY, y, x, nappulat)) {
                 nappulat.annaValittuNappula().liiku(x, y);
+                return true;
             }
         } else if (nappulanX > x && nappulanY > y) {
             if (tarkistaEsteetkunXYonPienempiKuinSijainti(nappulanX, nappulanY, y, x, nappulat)) {
                 nappulat.annaValittuNappula().liiku(x, y);
+                return true;
             }
         } else if (nappulanX < x && nappulanY > y) {
             if (tarkistaEsteetkunXonSuurempiJaYonPienempi(nappulanX, nappulanY, y, x, nappulat)) {
                 nappulat.annaValittuNappula().liiku(x, y);
+                return true;
             }
         } else if (nappulanX > x && nappulanY < y) {
             if (tarkistaEsteetkunYonSuurempiJaXonPienempi(nappulanX, nappulanY, y, x, nappulat)) {
                 nappulat.annaValittuNappula().liiku(x, y);
+                return true;
             }
         }
+        return false;
 
     }
 
@@ -236,7 +291,7 @@ public class Pelilogiikka {
      * @param x uusi X
      * @param y uusi Y
      */
-    private void liikutaTornia(NappulaSet nappulat, int x, int y) {
+    private boolean liikutaTornia(NappulaSet nappulat, int x, int y) {
         //Suoritetaan "onko matkanvarreella muista nappuluita" -testi
         int nappulanX = nappulat.annaValittuNappula().getKordinaatti().getX();
         int nappulanY = nappulat.annaValittuNappula().getKordinaatti().getY();
@@ -244,12 +299,15 @@ public class Pelilogiikka {
         if (nappulanX == x) {
             if (tarkistaEsteetYakselilla(nappulanY, y, nappulat, nappulanX)) {
                 nappulat.annaValittuNappula().liiku(x, y);
+                return true;
             }
         } else if (nappulanY == y) {
             if (tarkistaEsteetXakselilla(nappulanX, x, nappulat, nappulanY)) {
                 nappulat.annaValittuNappula().liiku(x, y);
+                return true;
             }
         }
+        return false;
     }
 
     /**
@@ -259,7 +317,7 @@ public class Pelilogiikka {
      * @param x uusi X
      * @param y uusi Y
      */
-    private void liikutaLahettia(NappulaSet nappulat, int x, int y) {
+    private boolean liikutaLahettia(NappulaSet nappulat, int x, int y) {
         //Suoritetaan "onko matkanvarreella muista nappuluita" -testi
         int nappulanX = nappulat.annaValittuNappula().getKordinaatti().getX();
         int nappulanY = nappulat.annaValittuNappula().getKordinaatti().getY();
@@ -267,20 +325,25 @@ public class Pelilogiikka {
         if (nappulanX < x && nappulanY < y) {
             if (tarkistaEsteetkunXYonSuurempikuinSijainti(nappulanX, nappulanY, y, x, nappulat)) {
                 nappulat.annaValittuNappula().liiku(x, y);
+                return true;
             }
         } else if (nappulanX > x && nappulanY > y) {
             if (tarkistaEsteetkunXYonPienempiKuinSijainti(nappulanX, nappulanY, y, x, nappulat)) {
                 nappulat.annaValittuNappula().liiku(x, y);
+                return true;
             }
         } else if (nappulanX < x && nappulanY > y) {
             if (tarkistaEsteetkunXonSuurempiJaYonPienempi(nappulanX, nappulanY, y, x, nappulat)) {
                 nappulat.annaValittuNappula().liiku(x, y);
+                return true;
             }
         } else if (nappulanX > x && nappulanY < y) {
             if (tarkistaEsteetkunYonSuurempiJaXonPienempi(nappulanX, nappulanY, y, x, nappulat)) {
                 nappulat.annaValittuNappula().liiku(x, y);
+                return true;
             }
         }
+        return false;
     }
 
     /**
@@ -290,11 +353,13 @@ public class Pelilogiikka {
      * @param x uusi X
      * @param y uusi Y
      */
-    private void liikutaSotilasta(NappulaSet nappulat, int x, int y) {
+    private boolean liikutaSotilasta(NappulaSet nappulat, int x, int y) {
         if (!nappulat.syokoValittuNappulaSijaintiin(x, y)) {
             nappulat.annaValittuNappula().liiku(x, y);
+            return true;
         } else {
             System.out.println("Voit liikkua vain syödessä tähän suuntaan");
+            return false;
         }
     }
 
@@ -466,6 +531,7 @@ public class Pelilogiikka {
         }
         return true;
     }
+
 //    public void testipeliRun() {
 //
 //        luoSotilaatLaudalle();
@@ -492,4 +558,7 @@ public class Pelilogiikka {
 //        nappulat.tulostaNappulat();
 //        nappulat.asciiLautaTulostin();
 //    }
+    public boolean isValkoisenVuoro() {
+        return valkoisenVuoro;
+    }
 }

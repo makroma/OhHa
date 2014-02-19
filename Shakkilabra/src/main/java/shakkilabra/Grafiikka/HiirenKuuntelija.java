@@ -21,6 +21,7 @@ public class HiirenKuuntelija implements MouseListener {
     private Pelilogiikka pelimoottori;
     private NappulaSet nappulat;
     private JLabel jlabel;
+    private JLabel valittuRuutu;
     private int x;
     private int y;
     private Color color;
@@ -34,6 +35,7 @@ public class HiirenKuuntelija implements MouseListener {
         this.y = y;
         this.color = j.getBackground();
         this.grafiikkamoottori = g;
+        this.valittuRuutu = null;
     }
 
     @Override
@@ -55,7 +57,6 @@ public class HiirenKuuntelija implements MouseListener {
     public void mouseEntered(MouseEvent e) {
 
         if (this.nappulat.getNappula(x, y) != null) {
-            // System.out.println("Nappula! " + this.nappulat.getNappula(x, y).getTyyppi());
             this.jlabel.setBackground(Color.red);
         }
 
@@ -66,12 +67,21 @@ public class HiirenKuuntelija implements MouseListener {
         if (this.nappulat.getNappula(x, y) != null && this.nappulat.annaValittuNappula() == null) {
             System.out.println("Nappula valittu " + nappulat.getNappula(x, y));
             this.nappulat.getNappula(x, y).setValittu(true);
+            this.grafiikkamoottori.setValittuRuutu(jlabel);
+            this.grafiikkamoottori.paivitaValintaVari();
+
         } else if (this.nappulat.annaValittuNappula() != null) {
 
             this.nappulat.tulostaValitunNappulanMahdollisetSiirrot();
             System.out.println("Liikutetaan nappulaa " + this.nappulat.annaValittuNappula() + " sijaintiin " + x + ", " + y);
-            this.pelimoottori.nappulanLiikkumisToiminto(this.nappulat, x, y);
-            this.grafiikkamoottori.run();
+
+            if (this.pelimoottori.nappulanLiikkumisToiminto(this.nappulat, x, y)) {
+                this.grafiikkamoottori.paivita(jlabel, x, y);
+            } else {
+                this.grafiikkamoottori.getValittuRuutu().setForeground(color.BLACK);
+                this.grafiikkamoottori.setValittuRuutu(null);
+            }
+
         }
     }
 }
