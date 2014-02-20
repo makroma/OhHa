@@ -13,5 +13,6 @@ Tuntikirjanpito
 13.2. 2 tuntia JavaDoc luonti 
 14.2. 2 tuntia Koodikatselmointi
 15.2. 1 tunti Menu
-
+19.2. 6 tuntia Ohjelmointia 
+20.2. 4 tuntia Ohjelmointia
 

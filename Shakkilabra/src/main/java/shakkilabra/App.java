@@ -1,6 +1,7 @@
 package shakkilabra;
 
 
+import javax.swing.SwingUtilities;
 import shakkilabra.Grafiikka.Grafiikkamoottori;
 
 /**
@@ -12,7 +13,6 @@ public class App {
     public static void main(String[] args) {
         
         Grafiikkamoottori peli = new Grafiikkamoottori();
-        peli.luoPeli();
-        peli.run();
+        SwingUtilities.invokeLater(peli);
     }
 }

@@ -3,7 +3,6 @@ package shakkilabra.Grafiikka;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -14,6 +13,9 @@ public class Menu extends JFrame implements ActionListener {
     }
 
     public JMenuBar createMenuBar() {
+        if (System.getProperty("os.name").contains("Mac")) {
+            System.setProperty("apple.laf.useScreenMenuBar", "true");
+        }
 
         JMenuBar menuBar = new JMenuBar();
 
@@ -35,12 +37,13 @@ public class Menu extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("" + e.getActionCommand());
-        if (e.getActionCommand().equals("Uusi Peli")) {
+        if (e.getActionCommand().equals("New Game")) {
             Grafiikkamoottori peli = new Grafiikkamoottori();
             peli.luoPeli();
             peli.run();
+            
         }
-        if (e.getActionCommand().equals("Poistu")) {
+        if (e.getActionCommand().equals("Exit")) {
             System.exit(0);
         }
     }

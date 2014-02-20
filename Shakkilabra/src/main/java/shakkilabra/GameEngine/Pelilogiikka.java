@@ -13,6 +13,7 @@ import shakkilabra.Assets.Nappulat.Kuningatar;
 import shakkilabra.Assets.Nappulat.Lahetti;
 import shakkilabra.Assets.Nappulat.Torni;
 import shakkilabra.Assets.Nappulat.Sotilas;
+import shakkilabra.Grafiikka.Pelinaytto;
 
 /**
  * Shakin pelilogiikka, joka vastaa nappuloiden luonnista ja liikuttelusta. L
@@ -24,10 +25,12 @@ import shakkilabra.Assets.Nappulat.Sotilas;
 public class Pelilogiikka {
 
     private boolean valkoisenVuoro;
+    private Pelinaytto pelinaytto;
 
-    public Pelilogiikka() {
+    public Pelilogiikka(Pelinaytto pelinaytto) {
 
         this.valkoisenVuoro = true;
+        this.pelinaytto = pelinaytto;
 
     }
 
@@ -36,7 +39,7 @@ public class Pelilogiikka {
      *
      * @param nappulat NappulatSet, joka sisältää listan kaikista nappuloista
      */
-    public void luoSotilaatLaudalle(NappulaSet nappulat) {
+    public void luoNappulatLaudalle(NappulaSet nappulat) {
         System.out.println("Luodaan nappulat...");
 
         //luodaan valoinen kunngas
@@ -93,7 +96,11 @@ public class Pelilogiikka {
      * LIIKKUMINEN 1. Onko mahdollinen siirto 2. Liikkuuko nappula tyhjään
      * ruutuun vai syökö 3. Nappula kohtaiset liikkumismedodit tai
      * syömistapahtuma
+     * 
+     * Jos siirto epäonnistuu, kirjoitetaan pelinäyttöön tästä
      *
+     * @param nappulat Atribuuttina nappulat
+     * @return Palauttaa true, jos siirto onnistui
      */
     public boolean oikeanPelaajanVuoro(NappulaSet nappulat) {
 
@@ -102,6 +109,13 @@ public class Pelilogiikka {
         } else if (nappulat.annaValittuNappula().getVari() == EnumVari.MUSTA && !valkoisenVuoro) {
             return true;
         }
+        
+        if (this.valkoisenVuoro) {
+            this.pelinaytto.kirjoitaPeliNayttoon("Valkoisen pelaajan vuoro!");
+        } else {
+            this.pelinaytto.kirjoitaPeliNayttoon("Mustan pelaajan vuoro!");
+        }
+
         return false;
     }
 
@@ -123,12 +137,15 @@ public class Pelilogiikka {
     public boolean nappulanLiikkumisToiminto(NappulaSet nappulat, int x, int y) {
 
         if (oikeanPelaajanVuoro(nappulat)) {
+
             System.out.println("Oikean pelaajan vuoro. ");
 
             if (onkoMahdollinenSiirto(nappulat, x, y)) {
                 //Siirrytään seuraavaan vaiheeseen
 
                 if (liikkuukoTyhjaanRuutuunVaiSyo(nappulat, x, y)) {
+
+                    tulostetaanSiirtoNayttoon(nappulat, x, y);
 
                     nappulat.annaValittuNappula().setValittu(false);
                     vaihdaPelaajanVuoro();
@@ -146,6 +163,19 @@ public class Pelilogiikka {
         System.out.println("Väärän pelaajan vuoro");
         nappulat.annaValittuNappula().setValittu(false);
         return false;
+
+    }
+
+    /**
+     * Pelinäyttö tulostin. Voidaan syöttää vapaamuotoinen teksti.
+     *
+     * @param nappulat
+     * @param x 
+     * @param y
+     */
+    private void tulostetaanSiirtoNayttoon(NappulaSet nappulat, int x, int y) {
+
+        this.pelinaytto.kirjoitaPeliNayttoon(nappulat.annaValittuNappula().toString() + " siirtyi ruutuun " + x + ", " + y);
 
     }
 

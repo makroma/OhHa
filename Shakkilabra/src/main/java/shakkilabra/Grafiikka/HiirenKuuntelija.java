@@ -51,15 +51,18 @@ public class HiirenKuuntelija implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
         this.jlabel.setBackground(color);
+        this.jlabel.setOpaque(true);
+        this.jlabel.repaint();
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
 
         if (this.nappulat.getNappula(x, y) != null) {
-            this.jlabel.setBackground(Color.red);
+            this.jlabel.setBackground(Color.ORANGE);
+//            this.jlabel.setOpaque(false);
+//            this.jlabel.repaint();
         }
-
     }
 
     @Override
@@ -69,7 +72,6 @@ public class HiirenKuuntelija implements MouseListener {
             this.nappulat.getNappula(x, y).setValittu(true);
             this.grafiikkamoottori.setValittuRuutu(jlabel);
             this.grafiikkamoottori.paivitaValintaVari();
-
         } else if (this.nappulat.annaValittuNappula() != null) {
 
             this.nappulat.tulostaValitunNappulanMahdollisetSiirrot();
@@ -77,11 +79,14 @@ public class HiirenKuuntelija implements MouseListener {
 
             if (this.pelimoottori.nappulanLiikkumisToiminto(this.nappulat, x, y)) {
                 this.grafiikkamoottori.paivita(jlabel, x, y);
+
             } else {
+
                 this.grafiikkamoottori.getValittuRuutu().setForeground(color.BLACK);
                 this.grafiikkamoottori.setValittuRuutu(null);
             }
 
         }
     }
+
 }
