@@ -14,6 +14,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import java.awt.BorderLayout;
+import java.awt.Graphics;
+import java.awt.Toolkit;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 
 /**
  * Grafiikkamoottori vastaa pelin grafiikasta
@@ -36,8 +40,8 @@ public final class Grafiikkamoottori implements Runnable {
     private Color musta;
 
     public Grafiikkamoottori() {
-        this.valkoinen = new Color(255, 255, 255, 255);
-        this.musta = new Color(0, 100, 200, 255);
+        this.valkoinen = new Color(255, 255, 255, 100);
+        this.musta = new Color(0, 100, 200, 100);
         this.pelinaytto = new Pelinaytto();
         this.pelilogiikka = new Pelilogiikka(this.pelinaytto);
         this.nappulatSet = new NappulaSet();
@@ -53,14 +57,16 @@ public final class Grafiikkamoottori implements Runnable {
      */
     public void luoPeli() {
 
+        this.pelilogiikka.luoNappulatLaudalle(this.nappulatSet);
+
         this.frame = new JFrame("ShakkiLabra 2014");
-        this.frame.setPreferredSize(new Dimension(1200, 830));
-        //    this.frame.setBackground(new Color(0, 0, 0, 0));
+        double height = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+        this.frame.setPreferredSize(new Dimension(1400, (int) height));
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Luo ylävalikon
         frame.setJMenuBar(menu.createMenuBar());
         //Luodaan laudan Grid
-        this.gui = new JPanel(new GridLayout(9, 10, 4, 4));
+        this.gui = new JPanel(new GridLayout(9, 9, 4, 4));
         this.gui.setPreferredSize(new Dimension(900, 800));
         this.gui.setBackground(new Color(0, 0, 0, 0));
         //Alalaidan syödyt nappulat
@@ -76,16 +82,13 @@ public final class Grafiikkamoottori implements Runnable {
     @Override
     public void run() {
         luoPeli();
-        this.pelilogiikka.luoNappulatLaudalle(this.nappulatSet);
-//
-//        //Siirrytään ruudukon luontiin
+
+        //Siirrytään ruudukon luontiin
         piirraGraafinenRuudukko();
-        //  frame.getContentPane().add(gui, BorderLayout.WEST);
+
 //
-//        //piirretään peliNäyttö
-//        this.pelinaytto.piirraPelinaytto();
-//        this.frame.getContentPane().add(this.pelinaytto.getNaytto(), BorderLayout.EAST);
-//        
+        //piirretään peliNäyttö
+        this.pelinaytto.piirraPelinaytto();
 //        
 //        JLabel l = new JLabel("X");
 //        l.setText("X");
@@ -93,12 +96,11 @@ public final class Grafiikkamoottori implements Runnable {
 //        this.syodytNappulat.add(l);
 //        this.frame.getContentPane().add(this.syodytNappulat, BorderLayout.SOUTH);
         Taustakuva taustakuva = new Taustakuva("./src/main/java/Image/wood3.jpg");
+        taustakuva.add(new AlphaContainer(gui), BorderLayout.WEST);
+        taustakuva.add(new AlphaContainer(this.pelinaytto.getNaytto()), BorderLayout.BEFORE_LINE_BEGINS);
+        taustakuva.setBorder(new EmptyBorder(20, 0, 0, 0));
 
-        taustakuva.add(gui);
-        taustakuva.setBackground(new Color(0, 100, 0, 255));
-        frame.getContentPane().add(taustakuva);
-        //frame.setLocationRelativeTo(null);
-
+        frame.getContentPane().add(taustakuva, BorderLayout.CENTER);
         frame.pack();
         frame.setVisible(true);
 
@@ -118,23 +120,16 @@ public final class Grafiikkamoottori implements Runnable {
      */
     public void paivita(JLabel l, int x, int y) {
 
-        //this.pelinaytto.kirjoitaPeliNayttoon("Tänne tulee kohta tehdyt siirrot!");
         this.valittuRuutu.setText(null);
+        this.valittuRuutu.setOpaque(false);
         this.valittuRuutu = null;
-        //  l.setForeground(Color.BLACK);
-
-        l.setBackground(new Color(255, 255, 255, 255));
-        l.setOpaque(true);
-        System.out.println(l.isOpaque());
-        l.repaint();
         l.setText(this.nappulatSet.getNappula(x, y).uCodeNappula());
 
     }
 
     public void paivitaValintaVari() {
 
-        //this.valittuRuutu.setBackground(new Color(100, 0, 0, 255));
-        this.valittuRuutu.setForeground(Color.GREEN);
+        this.valittuRuutu.setForeground(new Color(200, 0, 0, 150));
     }
 
     /**
@@ -153,7 +148,7 @@ public final class Grafiikkamoottori implements Runnable {
                     luoMustaRuutu(i, j, gui);
                 }
             }
-            tulostaPystyKordinaatti(i, gui);
+            //tulostaPystyKordinaatti(i, gui);
         }
         tulostaVaakaKordinaatti(gui);
     }
@@ -202,16 +197,17 @@ public final class Grafiikkamoottori implements Runnable {
      */
     public void piirraRuutu(String s, Container c, Color d, int x, int y) {
 
-        JLabel l = new JLabel(s);
+        JLabel l = new JLabel();
         l.setText(s);
         l.setHorizontalAlignment(SwingConstants.CENTER);
         l.setFont(font);
-        l.setOpaque(true);
         l.setBackground(d);
         if (d != null) {
             l.addMouseListener(new HiirenKuuntelija(this, l, this.pelilogiikka, this.nappulatSet, x, y));
+        } else{
+            l.setBackground(new Color(0,0,0,0));
         }
-        c.add(l);
+        c.add(new AlphaContainer(l));
     }
 
     /**

@@ -6,6 +6,8 @@
 package shakkilabra.Grafiikka;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JLabel;
@@ -50,19 +52,18 @@ public class HiirenKuuntelija implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
-        this.jlabel.setBackground(color);
-        this.jlabel.setOpaque(true);
-        this.jlabel.repaint();
+//        this.jlabel.setBackground(color);
+
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
 
-        if (this.nappulat.getNappula(x, y) != null) {
-            this.jlabel.setBackground(Color.ORANGE);
-//            this.jlabel.setOpaque(false);
-//            this.jlabel.repaint();
-        }
+//        if (this.nappulat.getNappula(x, y) != null) {
+//            this.jlabel.setBackground(Color.ORANGE);
+////            this.jlabel.setOpaque(false);
+////            this.jlabel.repaint();
+//        }
     }
 
     @Override
@@ -79,14 +80,16 @@ public class HiirenKuuntelija implements MouseListener {
 
             if (this.pelimoottori.nappulanLiikkumisToiminto(this.nappulat, x, y)) {
                 this.grafiikkamoottori.paivita(jlabel, x, y);
+//                this.jlabel.setOpaque(false);
+//                this.jlabel.repaint();
 
             } else {
-
+//                this.jlabel.setOpaque(false);
+//                this.jlabel.repaint();
                 this.grafiikkamoottori.getValittuRuutu().setForeground(color.BLACK);
                 this.grafiikkamoottori.setValittuRuutu(null);
             }
 
         }
     }
-
 }
