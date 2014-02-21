@@ -9,7 +9,7 @@ import shakkilabra.Assets.EnumVari;
 
 public final class Lauta {
 
-    private Ruutu[][] ruutu;
+    private final Ruutu[][] ruutu;
 
     public Lauta() {
         this.ruutu = new Ruutu[8][8];
@@ -35,8 +35,6 @@ public final class Lauta {
         }
         System.out.println("Ruudukko luotu.");
     }
-    
-   
 
     public Ruutu[][] getRuudukko() {
         return ruutu;

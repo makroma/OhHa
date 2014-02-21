@@ -26,7 +26,7 @@ public class Taustakuva extends JPanel {
 
         try {
             backgroundImage = ImageIO.read(new File(fileName));
-            System.out.println("kuva löytyi");
+            System.out.println("Asetetaan taustakuva.");
         } catch (IOException ex) {
             System.out.println("Kuvaa ei löydy");
             Logger.getLogger(Taustakuva.class.getName()).log(Level.SEVERE, null, ex);

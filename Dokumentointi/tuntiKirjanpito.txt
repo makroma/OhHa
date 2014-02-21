@@ -14,5 +14,6 @@ Tuntikirjanpito
 14.2. 2 tuntia Koodikatselmointi
 15.2. 1 tunti Menu
 19.2. 6 tuntia Ohjelmointia 
-20.2. 4 tuntia Ohjelmointia
+20.2. 6 tuntia Ohjelmointia
+21.2. 4 tuntia korjailua ja koodausta
 

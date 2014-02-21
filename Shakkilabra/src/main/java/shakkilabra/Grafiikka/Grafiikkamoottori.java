@@ -14,9 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import java.awt.BorderLayout;
-import java.awt.Graphics;
 import java.awt.Toolkit;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 /**
@@ -34,19 +32,20 @@ public final class Grafiikkamoottori implements Runnable {
     private JPanel gui;
     private final Menu menu;
     private JLabel valittuRuutu;
-    private Pelinaytto pelinaytto;
+    private Pelinaytto siirtoNaytto;
     private JPanel syodytNappulat;
     private Color valkoinen;
     private Color musta;
 
     public Grafiikkamoottori() {
-        this.valkoinen = new Color(255, 255, 255, 100);
-        this.musta = new Color(0, 100, 200, 100);
-        this.pelinaytto = new Pelinaytto();
-        this.pelilogiikka = new Pelilogiikka(this.pelinaytto);
+        this.valkoinen = new Color(243, 255, 255, 100);
+        this.musta = new Color(0, 100, 200, 70);
+        //this.musta = new Color(34, 83, 120, 100);
+        this.siirtoNaytto = new Pelinaytto();
+        this.pelilogiikka = new Pelilogiikka(this.siirtoNaytto);
         this.nappulatSet = new NappulaSet();
         this.lauta = new Lauta();
-        this.menu = new Menu();
+        this.menu = new Menu(this);
         this.valittuRuutu = null;
 
     }
@@ -60,8 +59,8 @@ public final class Grafiikkamoottori implements Runnable {
         this.pelilogiikka.luoNappulatLaudalle(this.nappulatSet);
 
         this.frame = new JFrame("ShakkiLabra 2014");
-        double height = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-        this.frame.setPreferredSize(new Dimension(1400, (int) height));
+        Dimension naytonKoko = Toolkit.getDefaultToolkit().getScreenSize();
+        this.frame.setPreferredSize(naytonKoko);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Luo ylävalikon
         frame.setJMenuBar(menu.createMenuBar());
@@ -86,21 +85,16 @@ public final class Grafiikkamoottori implements Runnable {
         //Siirrytään ruudukon luontiin
         piirraGraafinenRuudukko();
 
-//
         //piirretään peliNäyttö
-        this.pelinaytto.piirraPelinaytto();
-//        
-//        JLabel l = new JLabel("X");
-//        l.setText("X");
-//        this.syodytNappulat.setBackground(Color.red);
-//        this.syodytNappulat.add(l);
-//        this.frame.getContentPane().add(this.syodytNappulat, BorderLayout.SOUTH);
-        Taustakuva taustakuva = new Taustakuva("./src/main/java/Image/wood3.jpg");
-        taustakuva.add(new AlphaContainer(gui), BorderLayout.WEST);
-        taustakuva.add(new AlphaContainer(this.pelinaytto.getNaytto()), BorderLayout.BEFORE_LINE_BEGINS);
-        taustakuva.setBorder(new EmptyBorder(20, 0, 0, 0));
+        this.siirtoNaytto.luoSiirtoNaytto();
 
-        frame.getContentPane().add(taustakuva, BorderLayout.CENTER);
+        //luodaan tausta johon liitetään lauta ja sivupaneeli
+        Taustakuva kuvaKerros = new Taustakuva("./src/main/java/Image/PuuTausta.jpg");
+        kuvaKerros.add(new AlphaLaatikko(gui), BorderLayout.WEST);
+        kuvaKerros.add(new AlphaLaatikko(this.siirtoNaytto.getNaytto()), BorderLayout.BEFORE_LINE_BEGINS);
+        kuvaKerros.setBorder(new EmptyBorder(20, 0, 0, 0));
+
+        frame.getContentPane().add(kuvaKerros, BorderLayout.CENTER);
         frame.pack();
         frame.setVisible(true);
 
@@ -129,7 +123,7 @@ public final class Grafiikkamoottori implements Runnable {
 
     public void paivitaValintaVari() {
 
-        this.valittuRuutu.setForeground(new Color(200, 0, 0, 150));
+        this.valittuRuutu.setForeground(new Color(150, 0, 0, 255));
     }
 
     /**
@@ -204,10 +198,11 @@ public final class Grafiikkamoottori implements Runnable {
         l.setBackground(d);
         if (d != null) {
             l.addMouseListener(new HiirenKuuntelija(this, l, this.pelilogiikka, this.nappulatSet, x, y));
-        } else{
-            l.setBackground(new Color(0,0,0,0));
+        } else {
+            l.setForeground(new Color(0, 0, 0, 180));
+            l.setBackground(new Color(0, 0, 0, 0));
         }
-        c.add(new AlphaContainer(l));
+        c.add(new AlphaLaatikko(l));
     }
 
     /**
@@ -249,6 +244,17 @@ public final class Grafiikkamoottori implements Runnable {
 
     public JLabel getValittuRuutu() {
         return valittuRuutu;
+    }
+
+    public boolean isSiirrotNayttoNakyvissa() {
+        return this.siirtoNaytto.isVisible();
+    }
+
+    /**
+     * Siirtonäytto setVisible true/false
+     */
+    public void naytaSiirtoNaytto() {
+        this.siirtoNaytto.piilotaPeliNaytto();
     }
 
 }

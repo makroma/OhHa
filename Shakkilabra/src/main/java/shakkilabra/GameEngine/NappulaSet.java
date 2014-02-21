@@ -16,10 +16,10 @@ import java.util.List;
  */
 public class NappulaSet {
 
-    private List<Nappula> nappulat;
+    private final List<Nappula> nappulat;
 
     public NappulaSet() {
-        this.nappulat = new ArrayList<Nappula>();
+        this.nappulat = new ArrayList<>();
     }
 
     /**
@@ -84,10 +84,13 @@ public class NappulaSet {
     public boolean syokoValittuNappulaSijaintiin(int x, int y) {
         return annaValittuNappula().syokoNappula(x, y);
     }
-/**
- * Nappulalla voi olla Valittu arvo true. Tällöin palautettaan valittu nappula
- * @return valittu nappula
- */
+
+    /**
+     * Nappulalla voi olla Valittu arvo true. Tällöin palautettaan valittu
+     * nappula
+     *
+     * @return valittu nappula
+     */
     public Nappula annaValittuNappula() {
         for (Nappula n : this.nappulat) {
             if (n.isValittu()) {
@@ -96,13 +99,15 @@ public class NappulaSet {
         }
         return null;
     }
-/**
- * Tämä testi ei käytössä
- * @param n
- * @param x
- * @param y
- * @return 
- */
+
+    /**
+     * Tämä testi ei käytössä
+     *
+     * @param n
+     * @param x
+     * @param y
+     * @return
+     */
     public boolean onkoLinjallaMuitaNappuloitaTesti(Nappula n, int x, int y) {
 
         return false;
@@ -120,11 +125,11 @@ public class NappulaSet {
     public int getNappulatSize() {
         return this.nappulat.size();
     }
-/**
- * DEBUG // asciipelimoottorin toimintoja, jotka olivat käytössä pelin 
- * alkuvaiheen luonnissa.
- */
 
+    /**
+     * DEBUG // asciipelimoottorin toimintoja, jotka olivat käytössä pelin
+     * alkuvaiheen luonnissa.
+     */
     public void tulostaNappulat() {
         for (Nappula n : this.nappulat) {
             if (n.isElossa()) {
