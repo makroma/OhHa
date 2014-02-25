@@ -9,14 +9,16 @@ import java.awt.BorderLayout;
 import java.awt.Graphics;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import shakkilabra.CoverageIgnore;
 
 /**
  *
  * @author marko
  */
+@CoverageIgnore
 public class AlphaLaatikko extends JPanel {
 
-    private JComponent component;
+    private final JComponent component;
 
     public AlphaLaatikko(JComponent component) {
         this.component = component;

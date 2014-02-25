@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package shakkilabra.Grafiikka;
 
 import shakkilabra.Assets.EnumVari;
-
+import shakkilabra.CoverageIgnore;
+@CoverageIgnore
 public final class Lauta {
 
     private final Ruutu[][] ruutu;
@@ -24,10 +20,10 @@ public final class Lauta {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (valkoinen) {
-                    this.ruutu[i][j] = new Ruutu(EnumVari.VALKOINEN);
+                    ruutu[i][j] = new Ruutu(EnumVari.VALKOINEN);
                     valkoinen = false;
                 } else {
-                    this.ruutu[i][j] = new Ruutu(EnumVari.MUSTA);
+                    ruutu[i][j] = new Ruutu(EnumVari.MUSTA);
                     valkoinen = true;
                 }
             }
@@ -49,16 +45,14 @@ public final class Lauta {
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (this.ruutu[i][j].getVari() == EnumVari.VALKOINEN) {
+                if (ruutu[i][j].getVari() == EnumVari.VALKOINEN) {
                     System.out.print("\u2591");
                 }
-                if (this.ruutu[i][j].getVari() == EnumVari.MUSTA) {
+                if (ruutu[i][j].getVari() == EnumVari.MUSTA) {
                     System.out.print("\u2593");
                 }
-
             }
             System.out.println();
         }
-
     }
 }

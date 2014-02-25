@@ -16,4 +16,6 @@ Tuntikirjanpito
 19.2. 6 tuntia Ohjelmointia 
 20.2. 6 tuntia Ohjelmointia
 21.2. 4 tuntia korjailua ja koodausta
+22.2. 6 tuntia Ohjelmointia ja tutkimista
+24.2. 4 tuntia Bugin korjailua… Ei ratkaisua :(
 

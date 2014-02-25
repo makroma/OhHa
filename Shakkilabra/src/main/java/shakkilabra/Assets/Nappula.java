@@ -1,9 +1,6 @@
 package shakkilabra.Assets;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Abstrakti Nappulat yläluokka
@@ -18,7 +15,6 @@ public abstract class Nappula {
     private int siirtojenMaara;
     private boolean elossa;
     private boolean valittu;
-    private ArrayList<Kordinaatti> mahdollisetSiirrot;
 
     public Nappula(EnumTyyppi nappulat, EnumVari vari, Kordinaatti kord) {
         this.tyyppi = nappulat;
@@ -27,7 +23,6 @@ public abstract class Nappula {
         this.siirtojenMaara = 0;
         this.elossa = true;
         this.valittu = false;
-        //this.mahdollisetSiirrot = mahdollisetSiirrot;
     }
 
     /**
@@ -36,7 +31,6 @@ public abstract class Nappula {
      * @param x Xkordinaatti
      * @param y YKordinaatti
      */
-
     public abstract void liiku(int x, int y);
 
     public abstract String uCodeNappula();
@@ -60,11 +54,14 @@ public abstract class Nappula {
     public void kasvataSiirtojenMaaraaYhdella() {
         this.siirtojenMaara++;
     }
-/**
- *  Tarkistaa, onko annattu kordinaatti nappulan mahdolliset siirrot - listalla
- * @param kord tarkistettava kordinaatti
- * @return palauttaa true, jos arvo on listalla
- */
+
+    /**
+     * Tarkistaa, onko annattu kordinaatti nappulan mahdolliset siirrot -
+     * listalla
+     *
+     * @param kord tarkistettava kordinaatti
+     * @return palauttaa true, jos arvo on listalla
+     */
     public boolean onkoMahdollinenSiirto(Kordinaatti kord) {
         System.out.println("Tarkistetaan siirron mahdollisuus...");
         if (getMahdollisetSiirrot().contains(kord)) {
@@ -113,8 +110,9 @@ public abstract class Nappula {
         this.elossa = false;
     }
 
+    @Override
     public String toString() {
-        return this.vari + "" + this.tyyppi + " " + this.kordinaatti.getX() + "," + this.kordinaatti.getY() + " Siirtoja:" + this.siirtojenMaara;
+        return this.vari + " " + this.tyyppi + " ";
     }
 
     public boolean isValittu() {
@@ -125,4 +123,9 @@ public abstract class Nappula {
         this.valittu = valittu;
     }
 
+    public Nappula getNappula() {
+        return this;
+    }
+
+    
 }

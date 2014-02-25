@@ -1,19 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package shakkilabra.GameEngine;
+    package shakkilabra.GameEngine;
 
 import shakkilabra.Assets.EnumTyyppi;
 import shakkilabra.Assets.EnumVari;
-import shakkilabra.Assets.Nappulat.Hevonen;
-import shakkilabra.Assets.Nappulat.Kuningas;
-import shakkilabra.Assets.Nappulat.Kuningatar;
-import shakkilabra.Assets.Nappulat.Lahetti;
-import shakkilabra.Assets.Nappulat.Torni;
-import shakkilabra.Assets.Nappulat.Sotilas;
-import shakkilabra.Grafiikka.Pelinaytto;
+import shakkilabra.Grafiikka.SiirrotNaytto;
 
 /**
  * Shakin pelilogiikka, joka vastaa nappuloiden luonnista ja liikuttelusta. L
@@ -25,71 +14,12 @@ import shakkilabra.Grafiikka.Pelinaytto;
 public class Pelilogiikka {
     
     private boolean valkoisenVuoro;
-    private Pelinaytto pelinaytto;
+    private final SiirtoTulostaja siirtoNaytto;
     
-    public Pelilogiikka(Pelinaytto pelinaytto) {
-        
+    public Pelilogiikka(SiirrotNaytto pelinaytto) {
+        this.siirtoNaytto = new SiirtoTulostaja(pelinaytto);
         this.valkoisenVuoro = true;
-        this.pelinaytto = pelinaytto;
-        
     }
-
-    /**
-     * Luo nappulat aloitussijainteihin.
-     *
-     * @param nappulat NappulatSet, joka sisältää listan kaikista nappuloista
-     */
-    public void luoNappulatLaudalle(NappulaSet nappulat) {
-        System.out.println("Luodaan nappulat...");
-
-        //luodaan valoinen kunngas
-        nappulat.lisaaNappula(new Kuningas(EnumVari.VALKOINEN, 7, 4));
-        //luodaan valkoinen kuningatar
-        nappulat.lisaaNappula(new Kuningatar(EnumVari.VALKOINEN, 7, 3));
-        //luodaan valkoinen Lahetti
-        nappulat.lisaaNappula(new Lahetti(EnumVari.VALKOINEN, 7, 2));
-        nappulat.lisaaNappula(new Lahetti(EnumVari.VALKOINEN, 7, 5));
-        //luodaan valoinen Torni
-        nappulat.lisaaNappula(new Torni(EnumVari.VALKOINEN, 7, 0));
-        nappulat.lisaaNappula(new Torni(EnumVari.VALKOINEN, 7, 7));
-        //luodaan valkoiset hevoset
-        nappulat.lisaaNappula(new Hevonen(EnumVari.VALKOINEN, 7, 6));
-        nappulat.lisaaNappula(new Hevonen(EnumVari.VALKOINEN, 7, 1));
-        //luodaan valkoiset Sotilaat
-        nappulat.lisaaNappula(new Sotilas(EnumVari.VALKOINEN, 6, 0));
-        nappulat.lisaaNappula(new Sotilas(EnumVari.VALKOINEN, 6, 1));
-        nappulat.lisaaNappula(new Sotilas(EnumVari.VALKOINEN, 6, 2));
-        nappulat.lisaaNappula(new Sotilas(EnumVari.VALKOINEN, 6, 3));
-        nappulat.lisaaNappula(new Sotilas(EnumVari.VALKOINEN, 6, 4));
-        nappulat.lisaaNappula(new Sotilas(EnumVari.VALKOINEN, 6, 5));
-        nappulat.lisaaNappula(new Sotilas(EnumVari.VALKOINEN, 6, 6));
-        nappulat.lisaaNappula(new Sotilas(EnumVari.VALKOINEN, 6, 7));
-
-        //luodaan musta kuningas
-        nappulat.lisaaNappula(new Kuningas(EnumVari.MUSTA, 0, 4));
-        //luodaan Musta kuningatar
-        nappulat.lisaaNappula(new Kuningatar(EnumVari.MUSTA, 0, 3));
-        //luodaan Musta Lahetti
-        nappulat.lisaaNappula(new Lahetti(EnumVari.MUSTA, 0, 2));
-        nappulat.lisaaNappula(new Lahetti(EnumVari.MUSTA, 0, 5));
-        //luodaan musta Torni
-        nappulat.lisaaNappula(new Torni(EnumVari.MUSTA, 0, 0));
-        nappulat.lisaaNappula(new Torni(EnumVari.MUSTA, 0, 7));
-        //luodaan Mustat Hevoset
-        nappulat.lisaaNappula(new Hevonen(EnumVari.MUSTA, 0, 6));
-        nappulat.lisaaNappula(new Hevonen(EnumVari.MUSTA, 0, 1));
-        //luodaan mustat Sotilaat
-        nappulat.lisaaNappula(new Sotilas(EnumVari.MUSTA, 1, 0));
-        nappulat.lisaaNappula(new Sotilas(EnumVari.MUSTA, 1, 1));
-        nappulat.lisaaNappula(new Sotilas(EnumVari.MUSTA, 1, 2));
-        nappulat.lisaaNappula(new Sotilas(EnumVari.MUSTA, 1, 3));
-        nappulat.lisaaNappula(new Sotilas(EnumVari.MUSTA, 1, 4));
-        nappulat.lisaaNappula(new Sotilas(EnumVari.MUSTA, 1, 5));
-        nappulat.lisaaNappula(new Sotilas(EnumVari.MUSTA, 1, 6));
-        nappulat.lisaaNappula(new Sotilas(EnumVari.MUSTA, 1, 7));
-        
-    }
-
     /**
      * PELILOGIIKKA!
      *
@@ -102,7 +32,7 @@ public class Pelilogiikka {
      * @param nappulat Atribuuttina nappulat
      * @return Palauttaa true, jos siirto onnistui
      */
-    public boolean oikeanPelaajanVuoro(NappulaSet nappulat) {
+    public boolean onkoValitunPelaajanVuoro(NappulaSet nappulat) {
         
         if (nappulat.annaValittuNappula().getVari() == EnumVari.VALKOINEN && valkoisenVuoro) {
             return true;
@@ -110,20 +40,19 @@ public class Pelilogiikka {
             return true;
         }
         
-        if (this.valkoisenVuoro) {
-            this.pelinaytto.kirjoitaPeliNayttoon("Valkoisen pelaajan vuoro!");
+        if (valkoisenVuoro) {
+            siirtoNaytto.kirjoitaSiirrotNayttoon("Valkoisen pelaajan vuoro!");
         } else {
-            this.pelinaytto.kirjoitaPeliNayttoon("Mustan pelaajan vuoro!");
+            siirtoNaytto.kirjoitaSiirrotNayttoon("Mustan pelaajan vuoro!");
         }
-        
         return false;
     }
+
     /**
      * Vaihtaa pelaajan vuoron
      */
-    
     public void vaihdaPelaajanVuoro() {
-        this.valkoisenVuoro = !this.valkoisenVuoro;
+        valkoisenVuoro = !valkoisenVuoro;
     }
 
     /**
@@ -137,19 +66,18 @@ public class Pelilogiikka {
      * @param y uusi Y
      * @return jos toiminto onnistui, palautetaan true.
      */
-    public boolean nappulanLiikkumisToiminto(NappulaSet nappulat, int x, int y) {
+    public boolean testaaNappulanSiirtoJaToteutaSe(NappulaSet nappulat, int x, int y) {
+        int vanhaX = nappulat.annaValittuNappula().getKordinaatti().getX();
+        int vanhaY = nappulat.annaValittuNappula().getKordinaatti().getY();
         
-        if (oikeanPelaajanVuoro(nappulat)) {
-            
+        if (onkoValitunPelaajanVuoro(nappulat)) {
             System.out.println("Oikean pelaajan vuoro. ");
             
             if (onkoMahdollinenSiirto(nappulat, x, y)) {
                 //Siirrytään seuraavaan vaiheeseen
 
-                if (liikkuukoTyhjaanRuutuunVaiSyo(nappulat, x, y)) {
-                    
-                    tulostetaanSiirtoNayttoon(nappulat, x, y);
-                    
+                if (liikkuukoTyhjaanRuutuunVaiSyoko(nappulat, x, y)) {
+                    siirtoNaytto.tulostetaanSiirtoNayttoon(nappulat, vanhaX, vanhaY);
                     nappulat.annaValittuNappula().setValittu(false);
                     vaihdaPelaajanVuoro();
                     return true;
@@ -170,26 +98,13 @@ public class Pelilogiikka {
     }
 
     /**
-     * Pelinäyttö tulostin. Voidaan syöttää vapaamuotoinen teksti.
-     *
-     * @param nappulat
-     * @param x
-     * @param y
-     */
-    private void tulostetaanSiirtoNayttoon(NappulaSet nappulat, int x, int y) {
-        
-        this.pelinaytto.kirjoitaPeliNayttoon(nappulat.annaValittuNappula().toString() + " siirtyi ruutuun " + x + ", " + y);
-        
-    }
-
-    /**
      *
      * @param nappulat NappulatLista
      * @param x uusi X
      * @param y uusi Y
      * @return palauttaa true, jos siirto mahdollinen
      */
-    private boolean onkoMahdollinenSiirto(NappulaSet nappulat, int x, int y) {
+    public boolean onkoMahdollinenSiirto(NappulaSet nappulat, int x, int y) {
         
         System.out.println("Tyyppi: " + nappulat.annaValittuNappula());
         
@@ -200,7 +115,6 @@ public class Pelilogiikka {
             System.out.println("Siirto ei mahdollinen" + x + "," + y);
             return false;
         }
-        
     }
 
     /**
@@ -211,7 +125,7 @@ public class Pelilogiikka {
      * @param x uusi X
      * @param y uusi Y
      */
-    private boolean liikkuukoTyhjaanRuutuunVaiSyo(NappulaSet nappulat, int x, int y) {
+    private boolean liikkuukoTyhjaanRuutuunVaiSyoko(NappulaSet nappulat, int x, int y) {
         //Onko Ruutu tyhjä
         if (nappulat.onkoRuuduVapaa(x, y)) {
             System.out.println("Ruutu on vapaa");
@@ -229,6 +143,7 @@ public class Pelilogiikka {
                     
                     System.out.println("Liikutetaan valittu nappula sijaintiin..");
                     System.out.println("Valittu Nappula syö sijaintiin. Poistetaan nappulaa: " + nappulat.getNappula(x, y));
+                    siirtoNaytto.tulostetaanSyontiNayttoon(nappulat, x, y);
                     nappulat.poistaNappula(nappulat.getNappula(x, y));
                     System.out.print("Nappula poistettu. Liikutaan sijaintiin. ");
                     nappulat.annaValittuNappula().liiku(x, y);
@@ -241,15 +156,15 @@ public class Pelilogiikka {
         }
         return false;
     }
-    
+
     /**
      * Tarkistetaan nappulan liikkuminen ja esteet syömistilanteesssa.
+     *
      * @param nappulat
      * @param x
      * @param y
      * @return palautetaan true, jos siirto on mahdollinen
      */
-    
     private boolean nappulaSyoTarkistus(NappulaSet nappulat, int x, int y) {
         if (nappulat.annaValittuNappula().getTyyppi().equals(EnumTyyppi.SOTILAS)) {
             //Jos Sotilas, niin...
@@ -269,14 +184,15 @@ public class Pelilogiikka {
         }
         
     }
+
     /**
      * Tarkistaa onko siirto mahdollinen, jos onnistuu liikutetaan nappulaa
+     *
      * @param nappulat
      * @param x
      * @param y
      * @return palauttaa true, jos siirto onnistui
      */
-    
     private boolean nappulaTyypinTarkistusjaLiikkuminen(NappulaSet nappulat, int x, int y) {
         if (nappulat.annaValittuNappula().getTyyppi().equals(EnumTyyppi.SOTILAS)) {
             //Jos Sotilas, niin...
@@ -427,7 +343,7 @@ public class Pelilogiikka {
         if (!nappulat.syokoValittuNappulaSijaintiin(x, y)) {
             return true;
         } else {
-            if(!nappulat.onkoRuuduVapaa(x, y)){
+            if (!nappulat.onkoRuuduVapaa(x, y)) {
                 return true;
             }
             System.out.println("Voit liikkua vain syödessä tähän suuntaan");
@@ -634,4 +550,7 @@ public class Pelilogiikka {
         return valkoisenVuoro;
     }
     
+    public void setValkoisenVuoro(boolean valkoisenVuoro) {
+        this.valkoisenVuoro = valkoisenVuoro;
+    }
 }
