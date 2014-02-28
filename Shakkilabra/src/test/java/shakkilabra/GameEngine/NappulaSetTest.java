@@ -69,14 +69,29 @@ public class NappulaSetTest {
 
     @Test
     public void testOnkoRuutuValitunNappulanSiirroissa() {
+
+        nappulat.lisaaNappula(new Sotilas(EnumVari.MUSTA, 3, 3));
+        nappulat.getNappula(3, 3).isValittu();
+        // assertFalse(nappulat.onkoRuutuValitunNappulanSiirroissa(0, 0));
     }
 
     @Test
     public void testSyokoValittuNappulaSijaintiin() {
+        Nappula s = new Sotilas(EnumVari.MUSTA, 3, 3);
+        nappulat.lisaaNappula(s);
+        nappulat.getNappula(3, 3).isValittu();
+        // assertTrue(nappulat.syokoValittuNappulaSijaintiin(4, 4));
+
     }
 
     @Test
     public void testAnnaValittuNappula() {
+        Nappula s = new Sotilas(EnumVari.MUSTA, 3, 3);
+        s.isValittu();
+        nappulat.lisaaNappula(s);
+        nappulat.getNappula(3, 3).isValittu();
+       // assertEquals(s, nappulat.annaValittuNappula());
+
     }
 
     @Test
@@ -85,42 +100,17 @@ public class NappulaSetTest {
 
     @Test
     public void testGetNappula() {
+        Nappula s = new Sotilas(EnumVari.MUSTA, 3, 3);
+        nappulat.lisaaNappula(s);
+        assertEquals(s, nappulat.getNappula(3, 3));
+
     }
 
     @Test
     public void testGetNappulatSize() {
-    }
+        Nappula s = new Sotilas(EnumVari.MUSTA, 3, 3);
+        nappulat.lisaaNappula(s);
+        assertEquals(1, nappulat.getNappulatSize());
 
-    @Test
-    public void testGetNappulaSet() {
     }
-
-    @Test
-    public void testSetNappulatSet() {
-    }
-
-    @Test
-    public void testTulostaNappulat() {
-    }
-
-    @Test
-    public void testTulostaMahdollisetSiirrotXY() {
-    }
-
-    @Test
-    public void testTulostaValitunNappulanMahdollisetSiirrot() {
-    }
-
-    @Test
-    public void testAsciiLautaTulostin() {
-    }
-
-    @Test
-    public void testAsciiMahdollisetSiirrot() {
-    }
-
-    @Test
-    public void testToString() {
-    }
-
 }

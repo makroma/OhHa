@@ -13,14 +13,12 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import java.awt.BorderLayout;
 import javax.swing.border.EmptyBorder;
-import shakkilabra.CoverageIgnore;
 
 /**
  * Grafiikkamoottori vastaa pelin grafiikasta
  *
  * @author marko
  */
-@CoverageIgnore
 public final class Grafiikkamoottori implements Runnable {
 
     static Font font = new Font("Lucida Grande", Font.PLAIN, 64);
@@ -34,6 +32,9 @@ public final class Grafiikkamoottori implements Runnable {
     private final Color valkoinen;
     private final Color musta;
 
+    /**
+     * Asetetaan grafiikka moottorin parametrit.
+     */
     public Grafiikkamoottori() {
         this.valkoinen = new Color(243, 255, 255, 100);
         this.musta = new Color(0, 100, 200, 70);
@@ -56,7 +57,8 @@ public final class Grafiikkamoottori implements Runnable {
     }
 
     /**
-     * luo tällä Peli-ikkunan, menun,
+     * luo Peli-ikkunan, menun, ja laudan gridlayoutin ja luo uuden
+     * siirrotNäytön
      *
      */
     private void luoUusiIkkuna() {
@@ -95,7 +97,7 @@ public final class Grafiikkamoottori implements Runnable {
         //luodaan tausta johon liitetään lauta ja sivupaneeli
         TaustaKerros taustaKerros = new TaustaKerros("PuuTausta.jpg");
         taustaKerros.add(new AlphaLaatikko(ruudukko), BorderLayout.WEST);
-        taustaKerros.add(new AlphaLaatikko(this.siirrotNaytto.getSiirrotNaytto()), BorderLayout.BEFORE_LINE_BEGINS);
+        taustaKerros.add(new AlphaLaatikko(siirrotNaytto.getSiirrotNaytto()), BorderLayout.BEFORE_LINE_BEGINS);
         taustaKerros.setBorder(new EmptyBorder(20, 0, 0, 0));
 
         frame.getContentPane().add(taustaKerros, BorderLayout.CENTER);
@@ -140,7 +142,6 @@ public final class Grafiikkamoottori implements Runnable {
     /**
      * Päivittää valitun nappulan värin
      */
-
     public void paivitaValintaVari() {
         valittuRuutu.setForeground(new Color(150, 0, 0, 255));
     }
@@ -241,22 +242,42 @@ public final class Grafiikkamoottori implements Runnable {
      * GETTERIT
      *
      */
+    /**
+     *
+     * @return
+     */
     public Pelilogiikka getPelimoottori() {
         return pelilogiikka;
     }
 
+    /**
+     *
+     * @return
+     */
     public Lauta getLauta() {
         return lauta;
     }
 
+    /**
+     *
+     * @return
+     */
     public NappulaSet getNappulatSet() {
         return nappulatSet;
     }
 
+    /**
+     *
+     * @param valittuRuutu
+     */
     public void setValittuRuutu(JLabel valittuRuutu) {
         this.valittuRuutu = valittuRuutu;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getValittuRuutu() {
         return valittuRuutu;
     }
@@ -268,6 +289,10 @@ public final class Grafiikkamoottori implements Runnable {
         this.siirrotNaytto.piilotaSiirrotNaytto();
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isSiirrotNayttoNakyvissa() {
         return this.siirrotNaytto.isVisible();
     }

@@ -33,26 +33,6 @@ public class NappulatSet2Test {
         nappulaSet.getNappula(1, 5).setValittu(true);
     }
 
-    @BeforeClass
-    public static void setUpClass() {
-
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
-
-//     TODO add test methods here.
-//     The methods must be annotated with annotation @Test. For example:
-//    
     @Test
     public void nappuloitaSetissaOikeaMaara() {
         assertEquals(4, this.nappulaSet.getNappulatSize());

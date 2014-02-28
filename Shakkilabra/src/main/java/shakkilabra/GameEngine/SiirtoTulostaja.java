@@ -11,10 +11,18 @@ public class SiirtoTulostaja {
 
     private final SiirrotNaytto pelinaytto;
 
+    /**
+     *
+     * @param pelinaytto
+     */
     public SiirtoTulostaja(SiirrotNaytto pelinaytto) {
         this.pelinaytto = pelinaytto;
     }
 
+    /**
+     * Kortjoittaa siirrto näyttöön annetun stringin
+     * @param s String
+     */
     public void kirjoitaSiirrotNayttoon(String s) {
         pelinaytto.kirjoitaSiirrotNayttoon(s);
     }

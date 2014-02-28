@@ -2,23 +2,25 @@ package shakkilabra.Grafiikka;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
-import shakkilabra.CoverageIgnore;
 
 /**
  * Luo ylävalikon peliin
  *
  * @author marko
  */
-@CoverageIgnore
-public class YlaValikko extends JFrame implements ActionListener {
+
+public class YlaValikko implements ActionListener {
 
     private Grafiikkamoottori gr;
 
+    /**
+     * Tuo graafisen moottorin parametrina valikolle
+     * @param gr
+     */
     public YlaValikko(Grafiikkamoottori gr) {
         this.gr = gr;
     }
@@ -70,7 +72,7 @@ public class YlaValikko extends JFrame implements ActionListener {
             System.exit(0);
         }
         if (e.getActionCommand().equals("Tehdyt siirrot")) {
-            this.gr.naytaSiirtoNaytto();
+            gr.naytaSiirtoNaytto();
         }
     }
 

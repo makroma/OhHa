@@ -1,18 +1,26 @@
 package shakkilabra.Grafiikka;
 
 import shakkilabra.Assets.EnumVari;
-import shakkilabra.CoverageIgnore;
-@CoverageIgnore
+
+/**
+ * Lauta Sisältää ruutu olioita
+ * @author marko
+ */
 public final class Lauta {
 
     private final Ruutu[][] ruutu;
 
+    /**
+     * Luodaan kaksiulotteinen taulukko ruuduille.
+     */
     public Lauta() {
         this.ruutu = new Ruutu[8][8];
         luoRuudukko();
-        //asciiRuutuTulostin();
     }
 
+    /**
+     * Luo laudalle ruudukon. 
+     */
     public void luoRuudukko() {
 
         boolean valkoinen = true;
@@ -32,16 +40,30 @@ public final class Lauta {
         System.out.println("Ruudukko luotu.");
     }
 
+    /**
+     *
+     * @return
+     */
     public Ruutu[][] getRuudukko() {
         return ruutu;
     }
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @return
+     */
     public Ruutu getRuutu(int x, int y) {
         return ruutu[x][y];
     }
 
-    //DEBUG   
-    public void asciiRuutuTulostin() {
+    //DEBUG
+
+    /**
+     * Debuggas ruututulostin
+     */
+        public void asciiRuutuTulostin() {
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {

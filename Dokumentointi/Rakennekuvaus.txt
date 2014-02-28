@@ -1,0 +1,11 @@
+Rakennekuvaus
+
+Pelin Graafiset toiminnot luodaan ja niitä käytetään grafiikkamoottorin kautta. Grafiikka moottori luo Grid layoutin joka toimii pelilautana. Jokaisessa grid-ruudussa on JLabel jonka sisältöä - Nappula tai ruudun väri - tarkistetaan erillisistä Lauta ja ruutu luokista. 
+
+Jokaisella JLabelin sisältävällä ruudulla on oma hiiren kuuntelija. Hiiren kuuntelijassa testataan sisältääkö ruutu johon on painettu valitun nappulan. Jos nappulaa ei ole valittu valitaan ruudussa oleva nappula. Nappulan ollessa valittu liikutetaan valittua nappulaa uuteen sijaintiin.
+
+Kaikki pelinappulat on tallennettuna NappulatSettiin, jossa toimii kaikki nappuloiden haku ja luontitoiminnot.
+Pelilogiikka vastaa nimensä mukaisesti pelin tärkeimmistä logiikka toiminnoista. Siirtoa tehdessä käy Pelilokiikka läpi monimotkaiset tarkistukset: onko oikean pelaajan vuoro, siirtyykö nappula tyhjään ruutuun vai syökö se, onko siirto mahdollinen, onko matkalla esteitä. Lopulta pelilogiikka palauttaa aina true arvon grafiikkamoottorille, onnistuiko vai epäonnistuiko siirto.
+
+Grafiikka luokka tarjoaa myös pelin hienouksia, kuten siirrot näytön ja ylävalikon. Siirrot näytössä voidaan esittää pelissä tehtyjä siirtoa. Ylävalikkosta voi valita uuden peli, poistua ja valita näytetäänkö siirrto näyttöä. Ylävalikko integroituu OSX käyttöjärjestelmillä, mutta ubuntuun ei vielä, vaan käyttää JAVA JMenua.
+

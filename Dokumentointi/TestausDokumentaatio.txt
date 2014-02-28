@@ -1,0 +1,3 @@
+TestausDokumentaatio
+
+Kaikkia Abstraktin Nappulat luokan toteuttavia nappuloitta, kuten Kuningatar Ja Lähetti ei ole erikseen testattu, koska toteuttavat samat toiminnot kuin muut saman luokan toteuttavat metodit.

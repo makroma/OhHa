@@ -3,7 +3,6 @@ package shakkilabra.GameEngine;
 import shakkilabra.Assets.Kordinaatti;
 import shakkilabra.Assets.Nappula;
 import java.util.ArrayList;
-import java.util.List;
 import shakkilabra.Assets.EnumVari;
 import shakkilabra.Assets.Nappulat.Hevonen;
 import shakkilabra.Assets.Nappulat.Kuningas;
@@ -24,6 +23,9 @@ public class NappulaSet {
 
     private ArrayList<Nappula> nappulat;
 
+    /**
+     * Luo uuden NappulatSetin
+     */
     public NappulaSet() {
         nappulat = new ArrayList<>();
     }
@@ -161,12 +163,21 @@ public class NappulaSet {
         return null;
     }
 
+    /**
+     * Tehjentää nappulatlistan nappuloista
+     */
     public void tyhjennaNappulatLista() {
         nappulat.clear();
     }
 
     /*
      *GETTERI JA SETTERIT
+     */
+    /**
+     *
+     * @param x
+     * @param y
+     * @return
      */
     public Nappula getNappula(int x, int y) {
         for (Nappula n : nappulat) {
@@ -177,42 +188,32 @@ public class NappulaSet {
         return null;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getNappulatSize() {
         return nappulat.size();
-    }
-
-    public ArrayList<Nappula> getNappulaSet() {
-        return nappulat;
-    }
-
-    public void setNappulatSet(NappulaSet n) {
-        for(Nappula nappula:n.getNappulaSet()){
-            nappulat.add(nappula);
-        }
     }
 
     /**
      * DEBUG // asciipelimoottorin toimintoja, jotka olivat käytössä pelin
      * alkuvaiheen luonnissa.
+     *
+     * public void tulostaNappulat() { for (Nappula n : nappulat) { if
+     * (n.isElossa()) { System.out.println(n + n.getKordinaatti().getXY()); } }
+     * System.out.println(""); }
+     *
+     *
+     * public void tulostaMahdollisetSiirrotXY(int x, int y) {
+     * System.out.println("Mahdolliset siirrot nappulalle " + getNappula(x, y));
+     * for (Kordinaatti k : getNappula(x, y).getMahdollisetSiirrot()) {
+     * System.out.print(k.getX() + "," + k.getY() + ", "); }
+     * System.out.println(""); System.out.println(""); }
      */
-    public void tulostaNappulat() {
-        for (Nappula n : nappulat) {
-            if (n.isElossa()) {
-                System.out.println(n + n.getKordinaatti().getXY());
-            }
-        }
-        System.out.println("");
-    }
-
-    public void tulostaMahdollisetSiirrotXY(int x, int y) {
-        System.out.println("Mahdolliset siirrot nappulalle " + getNappula(x, y));
-        for (Kordinaatti k : getNappula(x, y).getMahdollisetSiirrot()) {
-            System.out.print(k.getX() + "," + k.getY() + ", ");
-        }
-        System.out.println("");
-        System.out.println("");
-    }
-
+    /**
+     *
+     */
     public void tulostaValitunNappulanMahdollisetSiirrot() {
         System.out.println("Mahdolliset siirrot nappulalle " + annaValittuNappula());
         for (Kordinaatti k : annaValittuNappula().getMahdollisetSiirrot()) {
@@ -222,49 +223,55 @@ public class NappulaSet {
         System.out.println("");
     }
 
-    public void asciiLautaTulostin() {
-        System.out.println("Tulostetaan lauta...");
-        for (int x = 0; x < 8; x++) {
-            for (int y = 0; y < 8; y++) {
-                if (getNappula(x, y) != null && getNappula(x, y).isElossa()) {
-                    System.out.print(" " + getNappula(x, y).getTyyppi() + "" + getNappula(x, y).getVari());
+    /*
+     public void asciiLautaTulostin() {
+     System.out.println("Tulostetaan lauta...");
+     for (int x = 0; x < 8; x++) {
+     for (int y = 0; y < 8; y++) {
+     if (getNappula(x, y) != null && getNappula(x, y).isElossa()) {
+     System.out.print(" " + getNappula(x, y).getTyyppi() + "" + getNappula(x, y).getVari());
 
-                } else {
-                    System.out.print(" x ");
-                }
-            }
-            System.out.println("");
-        }
-        System.out.println("");
+     } else {
+     System.out.print(" x ");
+     }
+     }
+     System.out.println("");
+     }
+     System.out.println("");
 
-    }
+     }
+     */
 
-    public void asciiMahdollisetSiirrot(int xX, int yY) {
-        System.out.println("Tulostetaan mahdolliset siirrot nappulalle: " + xX + "," + yY);
-        for (int x = 0; x < 8; x++) {
-            for (int y = 0; y < 8; y++) {
-                if (onkoRuutuValitunNappulanSiirroissa(x, y)) {
-                    System.out.print(" o ");
-                } else if (getNappula(x, y) != null && getNappula(x, y).isElossa()) {
-                    System.out.print(" " + getNappula(x, y).getTyyppi() + "" + getNappula(x, y).getVari());
-                } else {
-                    System.out.print(" x ");
-                }
-            }
-            System.out.println("");
-        }
-        System.out.println("");
+    /*
+     public void asciiMahdollisetSiirrot(int xX, int yY) {
+     System.out.println("Tulostetaan mahdolliset siirrot nappulalle: " + xX + "," + yY);
+     for (int x = 0; x < 8; x++) {
+     for (int y = 0; y < 8; y++) {
+     if (onkoRuutuValitunNappulanSiirroissa(x, y)) {
+     System.out.print(" o ");
+     } else if (getNappula(x, y) != null && getNappula(x, y).isElossa()) {
+     System.out.print(" " + getNappula(x, y).getTyyppi() + "" + getNappula(x, y).getVari());
+     } else {
+     System.out.print(" x ");
+     }
+     }
+     System.out.println("");
+     }
+     System.out.println("");
 
-    }
-
+     }
+     */
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         String s = "";
-        for (Nappula n:nappulat){
+        for (Nappula n : nappulat) {
             s += n.toString();
         }
         return s;
     }
-    
 
 }

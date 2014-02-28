@@ -4,15 +4,14 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JLabel;
-import shakkilabra.CoverageIgnore;
 import shakkilabra.GameEngine.NappulaSet;
 import shakkilabra.GameEngine.Pelilogiikka;
 
 /**
+ * Hiirenkuuntelija luokka
  *
  * @author marko
  */
-@CoverageIgnore
 public class HiirenKuuntelija implements MouseListener {
 
     private final Pelilogiikka pelimoottori;
@@ -20,16 +19,23 @@ public class HiirenKuuntelija implements MouseListener {
     private final JLabel jlabel;
     private final int x;
     private final int y;
-    private final Color vari;
     private final Grafiikkamoottori grafiikkamoottori;
 
+    /**
+     *
+     * @param g
+     * @param j
+     * @param p
+     * @param n
+     * @param x
+     * @param y
+     */
     public HiirenKuuntelija(Grafiikkamoottori g, JLabel j, Pelilogiikka p, NappulaSet n, int x, int y) {
         this.jlabel = j;
         this.pelimoottori = p;
         this.nappulat = n;
         this.x = x;
         this.y = y;
-        this.vari = j.getBackground();
         this.grafiikkamoottori = g;
     }
 
@@ -45,14 +51,10 @@ public class HiirenKuuntelija implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
-//        this.jlabel.setBackground(vari);
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-//        if (this.nappulat.getNappula(x, y) != null) {
-//            this.jlabel.setBackground(new Color(vari.getRed(), vari.getGreen(), vari.getBlue(), 60));
-//        }
     }
 
     /**
@@ -68,23 +70,36 @@ public class HiirenKuuntelija implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         if (nappulat.getNappula(x, y) != null && nappulat.annaValittuNappula() == null) {
-            System.out.println("Nappula valittu " + nappulat.getNappula(x, y));
-            nappulat.getNappula(x, y).setValittu(true);
-            grafiikkamoottori.setValittuRuutu(jlabel);
-            grafiikkamoottori.paivitaValintaVari();
+            nappulanValinta();
         } else if (nappulat.annaValittuNappula() != null) {
-
-            nappulat.tulostaValitunNappulanMahdollisetSiirrot();
-            System.out.println("Liikutetaan nappulaa " + nappulat.annaValittuNappula() + " sijaintiin " + x + ", " + y);
-
-            if (pelimoottori.testaaNappulanSiirtoJaToteutaSe(nappulat, x, y)) {
-                grafiikkamoottori.getValittuRuutu().setForeground(Color.BLACK);
-                grafiikkamoottori.paivitaRuutu(jlabel, x, y);
-
-            } else {
-                grafiikkamoottori.getValittuRuutu().setForeground(Color.BLACK);
-                grafiikkamoottori.setValittuRuutu(null);
-            }
+            valitunNappulanLiikuttaminen();
         }
+    }
+    
+    /**
+     * Jos jokin nappula on valittu ryhdytään siirtämään kyseistä nappulaa
+     */
+
+    private void valitunNappulanLiikuttaminen() {
+        nappulat.tulostaValitunNappulanMahdollisetSiirrot();
+        System.out.println("Liikutetaan nappulaa " + nappulat.annaValittuNappula() + " sijaintiin " + x + ", " + y);
+
+        if (pelimoottori.testaaNappulanSiirtoJaToteutaSe(nappulat, x, y)) {
+            grafiikkamoottori.getValittuRuutu().setForeground(Color.BLACK);
+            grafiikkamoottori.paivitaRuutu(jlabel, x, y);
+
+        } else {
+            grafiikkamoottori.getValittuRuutu().setForeground(Color.BLACK);
+            grafiikkamoottori.setValittuRuutu(null);
+        }
+    }
+/**
+ * jos nappulaa ei ole valittu. Valitaan ruudussa oleva nappula.
+ */
+    private void nappulanValinta() {
+        System.out.println("Nappula valittu " + nappulat.getNappula(x, y));
+        nappulat.getNappula(x, y).setValittu(true);
+        grafiikkamoottori.setValittuRuutu(jlabel);
+        grafiikkamoottori.paivitaValintaVari();
     }
 }

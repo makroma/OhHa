@@ -6,20 +6,21 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
-import shakkilabra.CoverageIgnore;
 
 /**
  * Näyttää tarvittaessa pelaajien tekemät siirrot laudan oikealla puolella
  *
  * @author marko
  */
-@CoverageIgnore
-public class SiirrotNaytto extends JPanel {
+public class SiirrotNaytto {
 
     private final JTextArea tietokentta;
     private final JPanel naytto;
     private String teksti;
 
+    /**
+     * Luo Jpanelin ja tekstikentän siihen.
+     */
     public SiirrotNaytto() {
 
         naytto = new JPanel();
@@ -27,6 +28,9 @@ public class SiirrotNaytto extends JPanel {
         teksti = "";
     }
 
+    /**
+     * Luo uuden siitonäytön
+     */
     public void luoSiirrotNaytto() {
 
         tietokentta.setEditable(false);
@@ -61,7 +65,15 @@ public class SiirrotNaytto extends JPanel {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getSiirrotNaytto() {
         return naytto;
+    }
+
+    public boolean isVisible() {
+        return naytto.isVisible();
     }
 }
