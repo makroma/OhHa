@@ -9,3 +9,4 @@ Pelilogiikka vastaa nimensä mukaisesti pelin tärkeimmistä logiikka toiminnois
 
 Grafiikka luokka tarjoaa myös pelin hienouksia, kuten siirrot näytön ja ylävalikon. Siirrot näytössä voidaan esittää pelissä tehtyjä siirtoa. Ylävalikkosta voi valita uuden peli, poistua ja valita näytetäänkö siirrto näyttöä. Ylävalikko integroituu OSX käyttöjärjestelmillä, mutta ubuntuun ei vielä, vaan käyttää JAVA JMenua.
 
+
